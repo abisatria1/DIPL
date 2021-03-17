@@ -1,0 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.container, .row {
+  height: 100vh;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.col h2 {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.card {
+  width: 600px;
+  margin: auto;
+}
+
+.tab-content {
+  padding: 16px;
+}
