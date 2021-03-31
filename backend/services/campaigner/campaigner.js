@@ -1,5 +1,5 @@
 const Service = require("../Service")
-
+const {eventService} = require('../index')
 class Campaigner extends Service {
   id_user
   email
