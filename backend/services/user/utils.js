@@ -1,15 +1,15 @@
-const axios = require('axios')
+const axios = require("axios")
 
-const getGeoIp = (ip) => {
+const getGeoIp = async (ip) => {
   const url = `http://ip-api.com/json/${ip}`
   try {
-    const response = await axios.get(url);
-    console.log(response);
+    const response = await axios.get(url)
+    console.log(response)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }
 
 module.exports = {
-    getGeoIp
+  getGeoIp,
 }
