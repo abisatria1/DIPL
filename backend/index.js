@@ -4,7 +4,7 @@ const {participantService} = require('./services')
 
 app.get('/',(req,res) => {
     const participant = new participantService()
-    res.send(participant.deleteParticipant())
+    res.send('App Running Succesfully')
 })
 
 app.listen(3000,() => {
