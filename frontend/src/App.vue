@@ -20,9 +20,9 @@
                 <em>Account (Username)</em>
               </template>
               <b-dropdown-item href="#">Profile</b-dropdown-item>
-              <b-dropdown-item href="#">Sign In</b-dropdown-item>
-              <b-dropdown-item href="#">Register</b-dropdown-item>
-              <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+              <b-dropdown-item :to="{ path: '/login' }">Sign In</b-dropdown-item>
+              <b-dropdown-item :to="{ path: '/register' }">Register</b-dropdown-item>
+              <b-dropdown-item >Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
         </b-collapse>
