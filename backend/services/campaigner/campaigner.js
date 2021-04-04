@@ -1,45 +1,39 @@
 const Service = require("../Service")
-const {eventService} = require('../index')
+const { eventService } = require("../index")
 class Campaigner extends Service {
-  id_user
-  email
-  password
-  nama
-  no_hp
-
-  constructor(id_user, email, password, nama, no_hp) {
-    super()
-    this.id_user = id_user
-    this.email = email
-    this.password = password
-    this.nama = nama
-    this.no_hp = no_hp
+  constructor({ db, eventService }) {
+    super({ db })
+    this.eventService = eventService
+    // this.id_user = id_user
+    // this.email = email
+    // this.password = password
+    // this.nama = nama
+    // this.no_hp = no_hp
   }
 
-  createEvent(eventBody) {
-    const event = eventService()
-    const createdEvent = event.createEvent(eventBody)
+  async createEvent(eventBody) {
+    const createdEvent = await this.eventService.createEvent(eventBody)
     return createdEvent
   }
 
-  updateEvent(eventBody, idEvent) {
-    const event = eventService()
-    return event.updateEvent(eventBody, idEvent)
+  async updateEvent(eventBody, eventId, campaignerId) {
+    return await this.eventService.updateEvent(eventBody, eventId, campaignerId)
   }
 
-  deleteEvent(idEvent) {
-    const event = eventService()
-    return event.deleteEvent(idEvent)
+  async deleteEvent(eventId, campaignerId) {
+    return await this.eventService.deleteEvent(eventId, campaignerId)
   }
 
-  viewEvent(idEvent) {
-    const event = eventService()
-    return event.viewEvent(idEvent)
+  async viewEvent(eventId) {
+    return await this.eventService.viewDetailEvent(eventId)
   }
 
-  findEvent(namaEvent) {
-    const event = eventService()
-    return event.findEvent(namaEvent)
+  async viewAllEvent(campaignerId) {
+    return await this.eventService.viewByCampaigner(campaignerId)
+  }
+
+  async findEvent(namaEvent, campaignerId) {
+    return await this.eventService.findByName(namaEvent, campaignerId)
   }
 }
 
