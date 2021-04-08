@@ -4,8 +4,6 @@ const { generateTwibbon } = require("./utils")
 class Participant extends Service {
   constructor(jenisKelamin, pekerjaan) {
     super()
-    this.jenisKelamin = jenisKelamin
-    this.pekerjaan = pekerjaan
   }
   createTwibbon(idEvent, foto) {
     const event = eventService()

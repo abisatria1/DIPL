@@ -5,10 +5,6 @@ const router = require("./routes")
 const bodyParser = require("body-parser")
 const wrapperMiddleware = require("./helper/wrapper")
 
-// database
-const db = require("./config/database.config")
-const relation = require("./config/relation.config")
-
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(wrapperMiddleware)
@@ -30,8 +26,4 @@ app.use((err, req, res, next) => {
   res.sendError(data, error, status)
 })
 
-app.listen(3000, () => {
-  db.sync({})
-    .then(() => console.log(`Application is running on http://localhost:3000`))
-    .catch((err) => console.log(err.message))
-})
+module.exports = app

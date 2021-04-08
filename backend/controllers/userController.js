@@ -26,7 +26,15 @@ class userController {
         user,
         participant
       )
-      return res.sendSuccess(result)
+
+      const response = {
+        id: result.id,
+        username: result.user.username,
+        email: result.user.email,
+        nama_participant: result.nama_participant,
+        userId: result.userId,
+      }
+      return res.sendSuccess(response, "Success", 201)
     } catch (err) {
       next(err)
     }
@@ -36,7 +44,17 @@ class userController {
     try {
       const { user, campaigner } = req.body
       const result = await this.userService.registerCampaigner(user, campaigner)
-      return res.sendSuccess(result)
+
+      const response = {
+        id: result.id,
+        username: result.user.username,
+        email: result.user.email,
+        nama_campaigner: result.nama_campaigner,
+        notelp_campaigner: result.notelp_campaigner,
+        maks_kuota_campaigner: result.maks_kuota_campaigner,
+        userId: result.userId,
+      }
+      return res.sendSuccess(response, "Success", 201)
     } catch (err) {
       next(err)
     }

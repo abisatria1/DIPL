@@ -1,19 +1,12 @@
 const Service = require("../Service")
-const { eventService } = require("../index")
 class Campaigner extends Service {
   constructor({ db, eventService }) {
     super({ db })
     this.eventService = eventService
-    // this.id_user = id_user
-    // this.email = email
-    // this.password = password
-    // this.nama = nama
-    // this.no_hp = no_hp
   }
 
   async createEvent(eventBody) {
-    const createdEvent = await this.eventService.createEvent(eventBody)
-    return createdEvent
+    return await this.eventService.createEvent(eventBody)
   }
 
   async updateEvent(eventBody, eventId, campaignerId) {
