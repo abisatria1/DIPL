@@ -1,6 +1,5 @@
 const awilix = require("awilix")
-const campaignerController = require("../controllers/campaignerController")
-const userController = require("../controllers/userController")
+const { campaignerController, userController } = require("../controllers")
 const Campaigner = require("../services/campaigner")
 const Event = require("../services/event/event")
 const Participant = require("../services/participant")
