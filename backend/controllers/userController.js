@@ -9,11 +9,11 @@ class userController {
 
   async login(req, res, next) {
     try {
-      const login = await this.userService.login(req.body)
-      if (!login) {
+      const token = await this.userService.login(req.body)
+      if (!token) {
         return res.sendError({}, "Invalid credentials", 401)
       }
-      return res.sendSuccess()
+      return res.sendSuccess({ jwtToken: token })
     } catch (err) {
       next(err)
     }

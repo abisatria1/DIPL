@@ -1,4 +1,19 @@
 const axios = require("axios")
+const dotenv = require("dotenv").config()
+const jwt = require("jsonwebtoken")
+
+const signJwtToken = (payload) => {
+  const token = jwt.sign(
+    {
+      iss: "Tweebz",
+      sub: payload,
+      iat: Date.now(),
+    },
+    process.env.JWT_KEY,
+    { expiresIn: "24h" }
+  )
+  return token
+}
 
 const getGeoIp = async (ip) => {
   const url = `http://ip-api.com/json/${ip}`
@@ -11,5 +26,6 @@ const getGeoIp = async (ip) => {
 }
 
 module.exports = {
+  signJwtToken,
   getGeoIp,
 }
