@@ -27,9 +27,13 @@ const campaigner = {
 }
 
 describe("User tests case", () => {
-  beforeAll(async () => await db.sync({ force: true }))
-  afterAll(async () => await db.sync({ force: true }))
-
+  beforeAll(async () => {
+    await db.drop()
+    await db.sync()
+  })
+  afterAll(async () => {
+    await db.close()
+  })
   describe(`Register participant test case to ${url.registerParticipant}`, () => {
     it("Should not create participant when register with required atributes is empty string", (done) => {
       request
