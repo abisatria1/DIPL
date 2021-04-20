@@ -10,8 +10,16 @@ class Event extends Service {
     return await this.db.Event.findAll({ where: { campaignerId } })
   }
 
-  async viewDetailEvent(eventId) {
-    return await this.db.Event.findByPk(eventId)
+  async viewDetailEvent(eventId, campaignerId) {
+    const event = await this.db.Event.findOne({
+      where: { [Op.and]: [{ id: eventId }, { campaignerId }] },
+    })
+    if (!event) {
+      const err = new Error("Event not Found")
+      err.status = 400
+      throw err
+    }
+    return event
   }
 
   async findByName(eventName, campaignerId) {
@@ -56,8 +64,8 @@ class Event extends Service {
       },
     })
     if (!event) {
-      const error = new Error("Unauthorized")
-      error.status = 401
+      const error = new Error("Event not found")
+      error.status = 400
       throw error
     }
     const result = await event.update(newData)
@@ -71,8 +79,8 @@ class Event extends Service {
       },
     })
     if (!event) {
-      const error = new Error("Unauthorized")
-      error.status = 401
+      const error = new Error("Event not found")
+      error.status = 400
       throw error
     }
     const result = await event.destroy()

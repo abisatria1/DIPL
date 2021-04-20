@@ -17,8 +17,8 @@ class Campaigner extends Service {
     return await this.eventService.deleteEvent(eventId, campaignerId)
   }
 
-  async viewEvent(eventId) {
-    return await this.eventService.viewDetailEvent(eventId)
+  async viewEvent(eventId, campaignerId) {
+    return await this.eventService.viewDetailEvent(eventId, campaignerId)
   }
 
   async viewAllEvent(campaignerId) {

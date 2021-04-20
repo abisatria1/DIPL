@@ -12,6 +12,9 @@ app.use(wrapperMiddleware)
 app.use("/api", router)
 
 // error handler
+app.use("/unauthorized", (req, res, next) =>
+  res.sendError({}, "Unauthorized", 401)
+)
 app.use((req, res, next) => {
   const error = new Error("Route not found")
   error.status = 404
