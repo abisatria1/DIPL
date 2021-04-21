@@ -4,10 +4,12 @@ const app = express()
 const router = require("./routes")
 const bodyParser = require("body-parser")
 const wrapperMiddleware = require("./helper/wrapper")
+const cors = require("cors")
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(wrapperMiddleware)
+app.use(cors())
 
 app.use("/image", express.static("image"))
 
