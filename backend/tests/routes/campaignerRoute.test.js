@@ -32,7 +32,7 @@ const event = {
   nama_event: "Dana",
   tanggal_event: "2020-02-01",
   jumlah_anggota: 120,
-  template_twibbon: "image/mantap",
+  template_twibbon: `D:/Logo HW.png`,
   deskripsi_event: "mantap",
 }
 
@@ -93,12 +93,23 @@ describe("Campaigner route tests case", () => {
   })
   beforeEach(() => request.set("Authorization", campaigner.token))
 
+  const event = {
+    nama_event: "Dana",
+    tanggal_event: "2020-02-01",
+    jumlah_anggota: 100,
+    template_twibbon: `D:/Logo HW.png`,
+    deskripsi_event: "mantap",
+  }
+
   describe(`Create event test case `, () => {
     it("Should not create if invalid body data", (done) => {
-      console.log({ campaigner })
       request
         .post(url.createEvent)
-        .send({ ...event, nama_event: undefined })
+        .field("nama_event", "")
+        .field("tanggal_event", event.tanggal_event)
+        .field("jumlah_anggota", event.jumlah_anggota)
+        .field("deskripsi_event", event.deskripsi_event)
+        .attach("template_twibbon", event.template_twibbon)
         .then((response) => {
           expect(response.status).toEqual(422)
           done()
@@ -108,14 +119,16 @@ describe("Campaigner route tests case", () => {
     it("Should create event with valid data", (done) => {
       request
         .post(url.createEvent)
-        .send(event)
+        .field("nama_event", event.nama_event)
+        .field("tanggal_event", event.tanggal_event)
+        .field("jumlah_anggota", event.jumlah_anggota)
+        .field("deskripsi_event", event.deskripsi_event)
+        .attach("template_twibbon", event.template_twibbon)
         .then((response) => {
           expect(response.status).toEqual(201)
-          expect(response.body.data).toEqual(
+          expect(response.body.data).toMatchObject(
             expect.objectContaining({
               id: expect.any(Number),
-              ...event,
-              tanggal_event: expect.any(String),
               createdAt: expect.any(String),
               updatedAt: expect.any(String),
             })
@@ -132,6 +145,7 @@ describe("Campaigner route tests case", () => {
         expect(response.body.data).toContainObject({ id: expect.any(Number) })
         expect(response.body.data).toContainObject({
           ...event,
+          template_twibbon: expect.any(String),
           tanggal_event: expect.any(String),
         })
         expect(response.body.data).toContainObject({
@@ -149,6 +163,7 @@ describe("Campaigner route tests case", () => {
           expect.objectContaining({
             id: expect.any(Number),
             ...event,
+            template_twibbon: expect.any(String),
             tanggal_event: expect.any(String),
             createdAt: expect.any(String),
             updatedAt: expect.any(String),
@@ -171,6 +186,7 @@ describe("Campaigner route tests case", () => {
         expect(response.body.data).toContainObject({ id: expect.any(Number) })
         expect(response.body.data).toContainObject({
           ...event,
+          template_twibbon: expect.any(String),
           tanggal_event: expect.any(String),
         })
         expect(response.body.data).toContainObject({
