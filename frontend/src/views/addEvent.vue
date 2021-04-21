@@ -31,6 +31,21 @@
       </b-form-group>
 
       <b-form-group
+        id="input-group-4"
+        label="Deskripsi Event:"
+        label-for="input-4"
+      >
+        <b-form-textarea
+          id="input-4"
+          v-model="form.jumlah_anggota"
+          type="text"
+          placeholder="Jumlah Anggota"
+          required
+        ></b-form-textarea>
+      </b-form-group>
+
+
+      <b-form-group
         id="input-group-2"
         label="Template Twibbon:"
         label-for="input-2"
