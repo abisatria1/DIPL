@@ -13,8 +13,10 @@ class campaignerController {
   async createEvent(req, res, next) {
     try {
       const campaigner = req.user
+      const file = req.file
       const createdEvent = await this.campaignerService.createEvent({
         ...req.body,
+        template_twibbon: file.path,
         campaignerId: campaigner.id,
       })
       return res.sendSuccess(createdEvent, "Berhasil", 201)

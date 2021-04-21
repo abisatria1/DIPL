@@ -9,6 +9,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(wrapperMiddleware)
 
+app.use("/image", express.static("image"))
+
 app.use("/api", router)
 
 // error handler
