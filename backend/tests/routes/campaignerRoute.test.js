@@ -1,6 +1,7 @@
 const supertest = require("supertest")
 const app = require("../../app")
 const db = require("../../config/database.config")
+const { findFile, countFiles } = require("../../helper/file")
 const User = require("../../services/user")
 const { signJwtToken } = require("../../services/user/utils")
 require("../../config/relation.config")
@@ -14,6 +15,7 @@ const url = {
   viewAllEvent: "/api/campaigner/event",
   viewDetailEvent: "/api/campaigner/event/",
   updateEvent: "/api/campaigner/event/",
+  updateTemplateTwibbon: "/api/campaigner/event/template/",
   deleteEvent: "/api/campaigner/event/",
   findEventByName: "/api/campaigner/find/event?namaEvent=",
 }
@@ -40,8 +42,8 @@ const updatedEvent = {
   nama_event: "HEHEHE",
   tanggal_event: "2020-02-01",
   jumlah_anggota: 200,
-  template_twibbon: "image/mantap",
   deskripsi_event: "mantap bener dah",
+  template_twibbon: "D:/foto abi.jpg",
 }
 
 expect.extend({
@@ -126,12 +128,17 @@ describe("Campaigner route tests case", () => {
         .attach("template_twibbon", event.template_twibbon)
         .then((response) => {
           expect(response.status).toEqual(201)
-          expect(response.body.data).toMatchObject(
-            expect.objectContaining({
-              id: expect.any(Number),
-              createdAt: expect.any(String),
-              updatedAt: expect.any(String),
-            })
+          expect(response.body.data).toHaveProperty(
+            "id",
+            "nama_event",
+            event.nama_event,
+            "tanggal_event",
+            "jumlah_anggota",
+            "deskripsi_event",
+            event.deskripsi_event,
+            "template_twibbon",
+            "createdAt",
+            "updatedAt"
           )
           done()
         })
@@ -159,15 +166,17 @@ describe("Campaigner route tests case", () => {
     it("Should return one event", (done) => {
       request.get(url.viewDetailEvent + "1").then((response) => {
         expect(response.status).toEqual(200)
-        expect(response.body.data).toEqual(
-          expect.objectContaining({
-            id: expect.any(Number),
-            ...event,
-            template_twibbon: expect.any(String),
-            tanggal_event: expect.any(String),
-            createdAt: expect.any(String),
-            updatedAt: expect.any(String),
-          })
+        expect(response.body.data).toHaveProperty(
+          "id",
+          "nama_event",
+          event.nama_event,
+          "tanggal_event",
+          "jumlah_anggota",
+          "deskripsi_event",
+          event.deskripsi_event,
+          "template_twibbon",
+          "createdAt",
+          "updatedAt"
         )
         done()
       })
@@ -210,7 +219,7 @@ describe("Campaigner route tests case", () => {
     it("Should not update event when invalid body data", (done) => {
       request
         .patch(url.updateEvent + "1")
-        .send({ ...event, nama_event: undefined })
+        .send({ ...updatedEvent, nama_event: undefined })
         .then((response) => {
           expect(response.status).toEqual(422)
           done()
@@ -220,7 +229,7 @@ describe("Campaigner route tests case", () => {
     it("Should not update event when event not found", (done) => {
       request
         .patch(url.updateEvent + "2")
-        .send(event)
+        .send({ ...updatedEvent, template_twibbon: undefined })
         .then((response) => {
           expect(response.status).toEqual(400)
           done()
@@ -230,20 +239,57 @@ describe("Campaigner route tests case", () => {
     it("Should update event with valid data", (done) => {
       request
         .patch(url.updateEvent + "1")
-        .send(updatedEvent)
+        .send({ ...updatedEvent, template_twibbon: undefined })
         .then((response) => {
           expect(response.status).toEqual(200)
           // check data is updated or not
           request.get(url.viewDetailEvent + "1").then((response) => {
-            expect(response.body.data).toEqual(
-              expect.objectContaining({
-                id: expect.any(Number),
-                ...updatedEvent,
-                tanggal_event: expect.any(String),
-                createdAt: expect.any(String),
-                updatedAt: expect.any(String),
-              })
+            expect(response.body.data).toHaveProperty(
+              "id",
+              "nama_event",
+              updatedEvent.nama_event,
+              "tanggal_event",
+              "jumlah_anggota",
+              "deskripsi_event",
+              updatedEvent.deskripsi_event,
+              "template_twibbon",
+              "createdAt",
+              "updatedAt"
             )
+            done()
+          })
+        })
+    })
+
+    it("Should not update twibbon template if no photo upload", (done) => {
+      request.patch(url.updateTemplateTwibbon + "1").then((response) => {
+        expect(response.status).toEqual(422)
+        done()
+      })
+    })
+
+    it("Should not update twibbon template if event not found", (done) => {
+      const dir = "image/template"
+      const beforeUploadCount = countFiles(dir)
+      request
+        .patch(url.updateTemplateTwibbon + "2")
+        .attach("template_twibbon", updatedEvent.template_twibbon)
+        .then((response) => {
+          expect(response.status).toEqual(400)
+          expect(countFiles(dir)).toEqual(beforeUploadCount)
+          done()
+        })
+    })
+
+    it("Should update twibbon template with valid data", (done) => {
+      request
+        .patch(url.updateTemplateTwibbon + "1")
+        .attach("template_twibbon", updatedEvent.template_twibbon)
+        .then((response) => {
+          expect(response.status).toEqual(200)
+          request.get(url.viewDetailEvent + "1").then((response) => {
+            const { template_twibbon } = response.body.data
+            expect(findFile(template_twibbon)).toEqual(true)
             done()
           })
         })
@@ -259,12 +305,17 @@ describe("Campaigner route tests case", () => {
     })
 
     it("Should delete event", (done) => {
-      request.delete(url.deleteEvent + "1").then((response) => {
-        expect(response.status).toEqual(200)
-        // check data is deleted or not
-        request.get(url.viewDetailEvent + "1").then((response2) => {
-          expect(response2.status).toEqual(400)
-          done()
+      request.get(url.viewDetailEvent + "1").then((response) => {
+        let old_twibbon
+        old_twibbon = response.body.data.template_twibbon
+        request.delete(url.deleteEvent + "1").then((response) => {
+          expect(response.status).toEqual(200)
+          expect(findFile(old_twibbon)).toEqual(false)
+          // check data is deleted or not
+          request.get(url.viewDetailEvent + "1").then((response2) => {
+            expect(response2.status).toEqual(400)
+            done()
+          })
         })
       })
     })

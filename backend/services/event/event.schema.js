@@ -13,7 +13,6 @@ const updateEventSchema = Joi.object().keys({
   tanggal_event: Joi.date().required(),
   jumlah_anggota: Joi.number().required(),
   deskripsi_event: Joi.string(),
-  template_twibbon: Joi.any(),
 })
 
 module.exports = {

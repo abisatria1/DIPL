@@ -1,5 +1,6 @@
 const multer = require("multer")
-const { fileFilterForCreateTwibbon } = require("../helper/uploadFileFilter")
+const { fileFilterBySchema } = require("../helper/uploadFileFilter")
+const eventSchema = require("../services/event/event.schema")
 
 const isUploadPhoto = () => {
   return async (req, res, next) => {
@@ -39,10 +40,19 @@ const uploadTwibbon = multer({
   limits: {
     fileSize: 1024 * 1024 * 5,
   },
-  fileFilter: fileFilterForCreateTwibbon(),
+  fileFilter: fileFilterBySchema(eventSchema.createEventSchema),
+})
+
+const updateTemplateTwibbon = multer({
+  storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+  fileFilter: fileFilterBySchema(),
 })
 
 module.exports = {
   uploadTwibbon,
+  updateTemplateTwibbon,
   isUploadPhoto,
 }

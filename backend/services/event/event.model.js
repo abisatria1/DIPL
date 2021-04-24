@@ -16,7 +16,7 @@ const EventModel = db.define("event", {
     allowNull: false,
   },
   template_twibbon: {
-    type: Sequelize.STRING(32),
+    type: Sequelize.STRING(),
   },
   deskripsi_event: {
     type: Sequelize.TEXT,

@@ -1,9 +1,3 @@
-const eventSchema = require("../services/event/event.schema")
-
-const fileFilterForCreateTwibbon = () => {
-  return fileFilterBySchema(eventSchema.createEventSchema)
-}
-
 const fileFilterBySchema = (schema) => {
   return (req, file, cb) => {
     if (
@@ -14,6 +8,8 @@ const fileFilterBySchema = (schema) => {
     ) {
       if (schema) {
         return validateBody(req, schema, cb)
+      } else {
+        return cb(null, true)
       }
     } else {
       const err = new Error("File extension doesnt match")
@@ -43,5 +39,5 @@ const validateBody = (req, schema, cb) => {
 }
 
 module.exports = {
-  fileFilterForCreateTwibbon,
+  fileFilterBySchema,
 }

@@ -5,7 +5,11 @@ const router = express.Router()
 
 // validator
 const validateBody = require("../middleware/bodyValidator")
-const { uploadTwibbon, isUploadPhoto } = require("../middleware/upload")
+const {
+  uploadTwibbon,
+  updateTemplateTwibbon,
+  isUploadPhoto,
+} = require("../middleware/upload")
 const schema = require("../services/event/event.schema")
 
 router.route("/find/event").get(campaignerController.findEvent)
@@ -18,6 +22,14 @@ router
     campaignerController.createEvent
   )
   .get(campaignerController.viewAllEvent)
+
+router
+  .route("/event/template/:eventId")
+  .patch(
+    updateTemplateTwibbon.single("template_twibbon"),
+    isUploadPhoto(),
+    campaignerController.updateEventTemplateTwibbon
+  )
 
 router
   .route("/event/:eventId")

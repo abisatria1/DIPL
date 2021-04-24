@@ -8,6 +8,7 @@ class campaignerController {
     this.viewAllEvent = this.viewAllEvent.bind(this)
     this.viewEvent = this.viewEvent.bind(this)
     this.findEvent = this.findEvent.bind(this)
+    this.updateEventTemplateTwibbon = this.updateEventTemplateTwibbon.bind(this)
   }
 
   async createEvent(req, res, next) {
@@ -29,8 +30,20 @@ class campaignerController {
     try {
       const { eventId } = req.params
       const campaignerId = req.user.id
-      const result = await this.campaignerService.updateEvent(
-        req.body,
+      await this.campaignerService.updateEvent(req.body, eventId, campaignerId)
+      return res.sendSuccess()
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  async updateEventTemplateTwibbon(req, res, next) {
+    try {
+      const { eventId } = req.params
+      const campaignerId = req.user.id
+      const file = req.file
+      await this.campaignerService.updateEventTemplateTwibbon(
+        { template_twibbon: file.path },
         eventId,
         campaignerId
       )
