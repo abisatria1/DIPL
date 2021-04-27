@@ -23,7 +23,7 @@
       >
         <b-form-textarea
           id="input-2"
-          v-model="form.desc_event"
+          v-model="form.deskripsi_event"
           type="text"
           placeholder="Deskripsi Event"
           required
@@ -61,7 +61,7 @@
         label="Tanggal Event:"
         label-for="input-4"
       >
-        <b-form-datepicker v-model="tanggal_event" locale="en"></b-form-datepicker>
+        <b-form-datepicker v-model="form.tanggal_event" locale="en"></b-form-datepicker>
       </b-form-group>
 
 
@@ -86,7 +86,17 @@ import axios from 'axios';
         show: true
       }
     },
+    mounted(){
+      this.init()
+    },
     methods: {
+      init(){
+        this.form.nama_event = "Belajar Menulis Skripsi"
+        this.form.deskripsi_event = "Menulis skripsi"
+        this.form.jumlah_anggota = 100
+        this.form.tanggal_event = "2021-05-20"
+        this.form.template_twibbon = "url/test.jpeg"
+      },
       onSubmit(event) {
         event.preventDefault()
         const config = {
