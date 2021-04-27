@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container">
-    <div id="nav">
-      <b-navbar toggleable="lg" type="dark" variant="info">
+    <div id="nav" >
+      <b-navbar toggleable="lg" type="dark" variant="info" >
         <b-navbar-brand href="#">Tweebs</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
