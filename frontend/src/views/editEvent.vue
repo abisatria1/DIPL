@@ -77,11 +77,11 @@ import axios from 'axios';
     data() {
       return {
         form: {
-            template_twibbon:null,
-            nama_event: '',
-            desc_event:'',
-            jumlah_anggota: null,
-
+          nama_event: "",
+          deskripsi_event: "",
+          jumlah_anggota: null,
+          tanggal_event: "",
+          template_twibbon: null,
         },
         show: true
       }

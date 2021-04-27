@@ -13,6 +13,14 @@ class Campaigner extends Service {
     return await this.eventService.updateEvent(eventBody, eventId, campaignerId)
   }
 
+  async updateEventTemplateTwibbon(template, eventId, campaignerId) {
+    return await this.eventService.updateEventTemplateTwibbon(
+      template,
+      eventId,
+      campaignerId
+    )
+  }
+
   async deleteEvent(eventId, campaignerId) {
     return await this.eventService.deleteEvent(eventId, campaignerId)
   }

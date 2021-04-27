@@ -1,97 +1,117 @@
 <template>
-  <div class="login-form">
-    <b-form @submit="onSubmit" v-if="show">
+<div class="wrapper">
+  <div class="mt-4 login-box">
+    <div class="login-box-header">
+      <h4 class="text-center">Login Form</h4>
+    </div>
+    <b-form @submit="onSubmit" class="form">
       <b-form-group
         id="input-group-1"
-        label="Email address:"
+        label="Email"
         label-for="input-1"
       >
         <b-form-input
           id="input-1"
           v-model="form.email"
           type="email"
-          placeholder="Enter email"
+          placeholder="Email"
           required
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-2" label="Password:" label-for="input-2">
+      <b-form-group
+        id="input-group-1"
+        label="Password"
+        label-for="input-1"
+      >
         <b-form-input
-          id="input-2"
+          id="input-1"
           v-model="form.password"
           type="password"
+          placeholder="Password"
           required
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group label="Login As" v-slot="{ ariaDescribedby }">
-        <b-form-radio-group
-          name="form.level"
-          v-model="form.levels"
-          :aria-describedby="ariaDescribedby"
-        >
-          <b-form-radio 
-            value="participant"
-          >Participant
-          </b-form-radio>
-          <b-form-radio
-            value="campaigner"
-          >Campaigner
-          </b-form-radio>
-        </b-form-radio-group>
-      </b-form-group>
-
-      <b-button type="submit" variant="primary">Submit</b-button>
+      <b-button type="submit" variant="primary" class="w-100" v-bind:class = "{ 'd-none' : !isHideSpinner}">Login</b-button>
+      <div class="text-center" v-bind:class = "{ 'd-none' : isHideSpinner}">
+        <b-spinner type="grow" variant="primary" label="Loading..."></b-spinner>
+      </div>
     </b-form>
-    <b-card class="mt-3" header="Form Data Result">
-      <pre class="m-0">{{ form }}</pre>
-    </b-card>
   </div>
+</div>
+  
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        form: {
-          email: '',
-          password: '',
-          levels: '',
-        },
-        show: true
+import axios from "axios"
+
+export default {
+  props : {
+    baseUrl : String,
+    url : {
+      login : String
+    }
+  },
+  data() {
+    return {
+      form: {
+        email: '',
+        password: '',
+      },
+      isHideSpinner: true
+    }
+  },
+  methods: {
+    onSubmit(event) {
+      event.preventDefault();
+      
+      const config = {
+        method: "post",
+        url: `${this.baseUrl}${this.url.login}`,
+        data : this.form,
       }
-    },
-    methods: {
-      onSubmit(event) {
-        event.preventDefault()
-        alert(JSON.stringify(this.form))
-      }
+
+      axios(config)
+        .then(({data}) => {
+          const token = data.data.jwtToken
+          this.$session.start()
+          this.$session.set("jwtToken", token)
+          this.isHideSpinner = true
+          this.messageHelpers.success("Login Success")
+          axios.defaults.headers.common['Authorization'] = token
+          this.$router.push("/event")
+        })
+        .catch((error) => {
+          this.isHideSpinner = true
+          
+          const message = error.response ? error.response.data.message : error.message
+          this.messageHelpers.error(message)
+          console.log(error.response)
+        })
     }
   }
+}
 </script>
 <style>
-* {
-  margin: 0;
-  padding: 0;
-}
-
-.container {
-  height: 100vh;
-  /* border: 1px solid black; */
-}
-
-.row {
-  /* border: 1px solid black; */
-  height: 100vh;
-  display: flex;
-  align-items: center;
-}
-
-.login-form {
-  box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.199);
-  padding: 16px;
-  align-items: center;
-  width: 400px;
-  margin: auto;
-}
+  .wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 91vh;
+  }
+  .login-box {
+    box-shadow: 0px 0px 2px 1px rgba(58, 58, 58, 0.199);
+    border-radius: 4px;
+    width: 40%;
+    margin: auto !important;
+    overflow: hidden;
+    background-color: #F2F3F7;
+  }
+  .login-box-header {
+    padding: 4px 0;
+  }
+  .form{
+    padding: 0px 60px 24px 60px;
+  }
 </style>

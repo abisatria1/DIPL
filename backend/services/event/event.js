@@ -1,6 +1,6 @@
 const Service = require("../Service")
 const Op = require("sequelize").Op
-
+const { deleteFile } = require("../../helper/file")
 class Event extends Service {
   constructor({ db }) {
     super({ db })
@@ -52,7 +52,6 @@ class Event extends Service {
       nama_event,
       tanggal_event,
       jumlah_anggota,
-      template_twibbon,
       deskripsi_event,
     },
     eventId,
@@ -72,6 +71,29 @@ class Event extends Service {
     return result
   }
 
+  async updateEventTemplateTwibbon(
+    { template_twibbon },
+    eventId,
+    campaignerId
+  ) {
+    console.log("haslo")
+    const event = await this.db.Event.findOne({
+      where: {
+        [Op.and]: [{ id: eventId }, { campaignerId }],
+      },
+    })
+    if (!event) {
+      deleteFile(template_twibbon)
+      const error = new Error("Event not found")
+      error.status = 400
+      throw error
+    }
+    console.log(deleteFile)
+    deleteFile(event.template_twibbon)
+    const result = await event.update({ template_twibbon })
+    return result
+  }
+
   async deleteEvent(eventId, campaignerId) {
     const event = await this.db.Event.findOne({
       where: {
@@ -83,6 +105,7 @@ class Event extends Service {
       error.status = 400
       throw error
     }
+    deleteFile(event.template_twibbon)
     const result = await event.destroy()
     return result
   }
