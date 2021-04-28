@@ -67,7 +67,13 @@
           ></b-form-datepicker>
         </b-form-group>
 
-        <b-button type="submit" variant="primary">Submit</b-button>
+        <div v-bind:class = "{ 'd-none' : !isHideSpinner}">
+          <b-button type="submit" variant="primary">Submit</b-button>
+          <b-button type="button" @click="onCancel" variant="danger" class="ml-3">Cancel</b-button>
+        </div>
+        <div class="text-center" v-bind:class = "{ 'd-none' : isHideSpinner}" >
+          <b-spinner type="grow" variant="primary" label="Loading..."></b-spinner>
+        </div>
       </b-form>
     </b-card>
   </div>
@@ -76,6 +82,12 @@
 <script>
 import axios from "axios"
 export default {
+  props : {
+    baseUrl : String,
+    url : {
+      createEvent : String
+    }
+  }, 
   data() {
     return {
       form: {
@@ -86,6 +98,12 @@ export default {
         template_twibbon: null,
       },
       show: true,
+      isHideSpinner : true
+    }
+  },
+  beforeCreate() {
+    if (!this.$session.exists()) {
+      return this.$router.push('/login')
     }
   },
   methods: {
@@ -94,8 +112,9 @@ export default {
       this.form.template_twibbon = file
     },
     onSubmit(event) {
+      this.isHideSpinner = false
       event.preventDefault()
-      const baseUrl = "http://localhost:3000"
+
       const data = new FormData()
       for (const property in this.form) {
         data.append(`${property}`, this.form[property])
@@ -103,24 +122,28 @@ export default {
 
       const config = {
         method: "post",
-        url: `${baseUrl}/api/campaigner/event/`,
+        url: `${this.baseUrl}${this.url.createEvent}`,
         headers: {
-          Authorization:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJUd2VlYnoiLCJzdWIiOnsiY2FtcGFpZ25lcklkIjoyfSwiaWF0IjoxNjE4OTEwNDUzMjM0LCJleHAiOjE2MTg5MTA1Mzk2MzR9.x1oT3lPC_FeupPVb444INFpde0WxDTAp0kA_wM5dak0",
+          "Authorization" : this.$session.get("jwtToken")
         },
         data,
       }
       axios(config)
-        .then(function(response) {
-          console.log(response)
-          alert("success")
-          location.reload()
+        .then(() => {
+          this.isHideSpinner = true
+          this.messageHelpers.success("Success, event created")
+          this.$router.push("/event")
         })
-        .catch(function(error) {
-          alert("Gagal!")
-          console.log(error)
+        .catch((error) => {
+          this.isHideSpinner = true
+          const message = error.response ? error.response.data.message : error.message
+          this.messageHelpers.error(message)
+          console.log(error.response)
         })
     },
+    onCancel() {
+      return this.$router.push("/event")
+    }
   },
 }
 </script>

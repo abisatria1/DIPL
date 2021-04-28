@@ -65,6 +65,7 @@ export default {
   methods: {
     onSubmit(event) {
       event.preventDefault();
+      this.isHideSpinner = false
       
       const config = {
         method: "post",
@@ -81,6 +82,7 @@ export default {
           this.messageHelpers.success("Login Success")
           axios.defaults.headers.common['Authorization'] = token
           this.$router.push("/event")
+          this.isHideSpinner = true
         })
         .catch((error) => {
           this.isHideSpinner = true
