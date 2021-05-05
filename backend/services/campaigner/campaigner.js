@@ -10,38 +10,30 @@ class Campaigner extends Service {
     super({ db })
     this.eventService = eventService
   }
-
   /**
-   * Membuat event baru dengan template twibbon.
-   * @param {nama_event, tanggal_event, jumlah_anggota, deskripsi_event, template_twibbon, campaignerId} eventBody
-   * @returns data event yang sudah dibuat
+   * create event
+   * @param {Event.body} eventBody
+   * @returns Promise<Event>
    */
   async createEvent(eventBody) {
     return await this.eventService.createEvent(eventBody)
   }
-
   /**
-   * update data event suatu event dengan id event
-   * @param eventBody data event
-   * @param {String} eventBody.nama_event nama event
-   * @param {String} eventBody.tanggal_event tanggal event
-   * @param {Number} eventBody.jumlah_anggota jumlah anggota mengikuti event
-   * @param {String} eventBody.deskripsi_event deskripsi event
+   * Update event
+   * @param {Event.body} eventBody
    * @param {Number} eventId
    * @param {Number} campaignerId
-   * @returns jumlah row yang berhasil di update
+   * @returns Promise<Event>
    */
   async updateEvent(eventBody, eventId, campaignerId) {
     return await this.eventService.updateEvent(eventBody, eventId, campaignerId)
   }
-
   /**
-   * update template twibbon suatu event dari id event
-   * @param template object template twibbon
-   * @param {String} template.template_twibbon template twibbon
+   * change template event twibbon
+   * @param {fs.File} template
    * @param {Number} eventId
    * @param {Number} campaignerId
-   * @returns jumlah row yang berhasil di update
+   * @returns Promise<bool>
    */
   async updateEventTemplateTwibbon(template, eventId, campaignerId) {
     return await this.eventService.updateEventTemplateTwibbon(
@@ -50,19 +42,38 @@ class Campaigner extends Service {
       campaignerId
     )
   }
-
+  /**
+   * Delte Event
+   * @param {Number} eventId
+   * @param {Number} campaignerId
+   * @returns Promise<bool>
+   */
   async deleteEvent(eventId, campaignerId) {
     return await this.eventService.deleteEvent(eventId, campaignerId)
   }
-
+  /**
+   * Show specific event
+   * @param {Number} eventId
+   * @param {Number} campaignerId
+   * @returns Promise<Event>
+   */
   async viewEvent(eventId, campaignerId) {
     return await this.eventService.viewDetailEvent(eventId, campaignerId)
   }
-
+  /**
+   * Show all event
+   * @param {Number} campaignerId
+   * @returns Promise<Event>
+   */
   async viewAllEvent(campaignerId) {
     return await this.eventService.viewByCampaigner(campaignerId)
   }
-
+  /**
+   * show event with given Name Event on campaigner
+   * @param {String} namaEvent
+   * @param {Number} campaignerId
+   * @returns Promise<Event>
+   */
   async findEvent(namaEvent, campaignerId) {
     return await this.eventService.findByName(namaEvent, campaignerId)
   }

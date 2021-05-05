@@ -1,5 +1,10 @@
 const Joi = require("joi")
 
+/**
+ * validate payload with Joi Schema
+ * @param {Joi.schema} schema 
+ * @returns callback
+ */
 const validateBody = (schema = Joi.object()) => {
   return async (req, res, next) => {
     const result = schema.validate(req.body, { abortEarly: false })
