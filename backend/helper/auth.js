@@ -24,7 +24,6 @@ passport.use(
           err.status = 401
           return done(err)
         }
-        console.log(payload.sub)
 
         const model = participantId != "" ? db.Participant : db.Campaigner
         const user = await model.findOne({

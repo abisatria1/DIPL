@@ -18,6 +18,9 @@ const isUploadPhoto = () => {
   }
 }
 
+/**
+ * Membuat storage dari multer
+ */
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     let folder = `image/`
@@ -39,6 +42,9 @@ const storage = multer.diskStorage({
   },
 })
 
+/**
+ * Instansiasi multer untuk upload twibbon
+ */
 const uploadTwibbon = multer({
   storage,
   limits: {
@@ -47,6 +53,9 @@ const uploadTwibbon = multer({
   fileFilter: fileFilterBySchema(eventSchema.createEventSchema),
 })
 
+/**
+ * Instansiasi multer untuk update template twibbon
+ */
 const updateTemplateTwibbon = multer({
   storage,
   limits: {

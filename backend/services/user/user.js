@@ -2,6 +2,10 @@ const Service = require("../Service")
 const bcrypt = require("bcrypt")
 const Op = require("sequelize").Op
 const { getGeoIp, signJwtToken } = require("./utils")
+
+/**
+ * Class ini berisi bisnis logic dari user
+ */
 class User extends Service {
   /**
    * depedency injection service event.
