@@ -1,3 +1,10 @@
+/**
+ * Wrapper for HTTP Response
+ * @param {Express.Request} req 
+ * @param {Express.Response} res 
+ * @param {Express.NextFunction} next 
+ * @returns Express.Response
+ */
 const wrapperMiddleware = (req, res, next) => {
   res.sendSuccess = (data = {}, message = "Sucess", code = 200) => {
     return res.status(code).send({

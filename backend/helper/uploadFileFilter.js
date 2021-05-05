@@ -1,3 +1,8 @@
+/**
+ * Filter File using JOI Schema
+ * @param {Joi.object} schema 
+ * @returns callback bool (True/False)
+ */
 const fileFilterBySchema = (schema) => {
   return (req, file, cb) => {
     if (
@@ -18,7 +23,13 @@ const fileFilterBySchema = (schema) => {
     }
   }
 }
-
+/**
+ * Validate payload with Joi Schema
+ * @param {Express.request} req 
+ * @param {Joi.object} schema 
+ * @param {Express.NextFunction} cb 
+ * @returns callback
+ */
 const validateBody = (req, schema, cb) => {
   const result = schema.validate(req.body, { abortEarly: false })
   if (result.error) {

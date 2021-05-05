@@ -2,6 +2,10 @@ const multer = require("multer")
 const { fileFilterBySchema } = require("../helper/uploadFileFilter")
 const eventSchema = require("../services/event/event.schema")
 
+/**
+ * Check if photo was updated
+ * @returns nextFunction
+ */
 const isUploadPhoto = () => {
   return async (req, res, next) => {
     const photo = req.file || req.files
