@@ -1,4 +1,7 @@
 const Service = require("../Service")
+/**
+ * Class ini berisi terkait dengan bisnis logic dari campaigner
+ */
 class Campaigner extends Service {
   /**
    * depedency injection service event.

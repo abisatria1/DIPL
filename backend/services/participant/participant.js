@@ -3,7 +3,7 @@ const { userService, eventService } = require("../index")
 const { generateTwibbon } = require("./utils")
 class Participant extends Service {
   /**
-   * depedency injection service event.
+   * depedency injection db.
    * untuk menambahkan depedency bisa menambahkan pada parameter
    * @param {Sequelize} db
    */

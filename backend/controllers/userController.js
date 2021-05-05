@@ -1,6 +1,10 @@
+/**
+ * Class ini berisi terkait dengan controller dari user
+ * Berfungsi untuk menghandle segala jenis usecase yang berkaitan dengan user
+ */
 class userController {
   /**
-   * depedency injection service campaigner.
+   * depedency injection service user.
    * untuk menambahkan depedency bisa menambahkan pada parameter
    * @param {UserService} userService
    */
