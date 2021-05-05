@@ -2,6 +2,11 @@ const axios = require("axios")
 const dotenv = require("dotenv").config()
 const jwt = require("jsonwebtoken")
 
+/**
+ * Untuk membuat token jwt dengan bantuan library jsonwebtoken
+ * @param {Object} payload
+ * @returns jwt token
+ */
 const signJwtToken = (payload) => {
   const token = jwt.sign(
     {
@@ -15,6 +20,11 @@ const signJwtToken = (payload) => {
   return token
 }
 
+/**
+ * Untuk mendapatkan data address dari ip address
+ * @param {String} ip
+ * @returns string data address
+ */
 const getGeoIp = async (ip) => {
   const url = `http://ip-api.com/json/${ip}`
   try {

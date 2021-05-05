@@ -12,7 +12,7 @@ class Campaigner extends Service {
   }
   /**
    * create event
-   * @param {Event.body} eventBody
+   * @param {Object} eventBody
    * @returns Promise<Event>
    */
   async createEvent(eventBody) {
@@ -20,7 +20,7 @@ class Campaigner extends Service {
   }
   /**
    * Update event
-   * @param {Event.body} eventBody
+   * @param {Object} eventBody
    * @param {Number} eventId
    * @param {Number} campaignerId
    * @returns Promise<Event>
@@ -30,7 +30,7 @@ class Campaigner extends Service {
   }
   /**
    * change template event twibbon
-   * @param {fs.File} template
+   * @param {Object} template
    * @param {Number} eventId
    * @param {Number} campaignerId
    * @returns Promise<bool>

@@ -3,18 +3,19 @@ const { userService, eventService } = require("../index")
 const { generateTwibbon } = require("./utils")
 class Participant extends Service {
   /**
-   * Participant
-   * @param {String} jenisKelamin 
-   * @param {String} pekerjaan 
+   * depedency injection service event.
+   * untuk menambahkan depedency bisa menambahkan pada parameter
+   * @param {Sequelize} db
    */
-  constructor(jenisKelamin, pekerjaan) {
+  constructor({ db }) {
+    this.db = db
     super()
   }
   /**
    * create twibbon
-   * @param {Number} idEvent 
-   * @param {fs.File} foto 
-   * @returns 
+   * @param {Number} idEvent
+   * @param {fs.File} foto
+   * @returns
    */
   createTwibbon(idEvent, foto) {
     const event = eventService()
@@ -24,8 +25,8 @@ class Participant extends Service {
   }
   /**
    * view twibbon
-   * @param {Number} idEvent 
-   * @param {Number} idUser 
+   * @param {Number} idEvent
+   * @param {Number} idUser
    * @returns File
    */
   viewTwibbon(idEvent, idUser) {
@@ -35,8 +36,8 @@ class Participant extends Service {
   }
   /**
    * upload Foto Diri
-   * @param {Number} idUser 
-   * @param {fs.File} foto 
+   * @param {Number} idUser
+   * @param {fs.File} foto
    * @returns String
    */
   uploadFotoDiri(idUser, foto) {
@@ -47,7 +48,7 @@ class Participant extends Service {
   }
   /**
    * delete twibbon
-   * @param {Number} idTwibbon 
+   * @param {Number} idTwibbon
    * @returns String
    */
   deleteTwibbon(idTwibbon) {
