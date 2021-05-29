@@ -12,6 +12,23 @@ class Participant extends Service {
     super({ db })
     this.eventService = eventService
   }
+
+  /**
+   * view hasil jadi twibbon yang sudah dibuat
+   * @param {Number} eventId
+   * @param {Number} participantId
+   * @returns String
+   */
+  async viewTwibbon(eventId, participantId) {
+    const event = await this.eventService.viewDetailEventByParticipant(eventId)
+    const twibbon = await this.db.EventParticipant.findOne({
+      where: {
+        [Op.and]: [{ eventId: event.id }, { participantId }],
+      },
+    })
+    return twibbon
+  }
+
   /**
    * create twibbon
    * @param {Number} idEvent
@@ -36,22 +53,6 @@ class Participant extends Service {
       event: event.template_twibbon,
       foto_participant: twibbon.foto_participant,
     }
-  }
-
-  /**
-   * view hasil jadi twibbon yang sudah dibuat
-   * @param {Number} eventId
-   * @param {Number} participantId
-   * @returns String
-   */
-  async viewTwibbon(eventId, participantId) {
-    const event = await this.eventService.viewDetailEventByParticipant(eventId)
-    const twibbon = await this.db.EventParticipant.findOne({
-      where: {
-        [Op.and]: [{ eventId: event.id }, { participantId }],
-      },
-    })
-    return twibbon
   }
 
   /**

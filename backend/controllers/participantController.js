@@ -17,6 +17,30 @@ class participantController {
     this.deleteTwibbon = this.deleteTwibbon.bind(this)
   }
 
+  /**
+   * untuk melihat twibbon yang sudah dibuat
+   * @param {Express.Request} req
+   * @param {Express.Response} req
+   * @param {Express.NextFunction} next
+   */
+  async viewTwibbon(req, res, next) {
+    try {
+      const { user } = req
+      const { eventId } = req.params
+      const result = await this.participantService.viewTwibbon(eventId, user.id)
+      return res.sendSuccess(result)
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  /**
+   * Generate twibbon dimana foto participant dan template twibbon sudah
+   * di database
+   * @param {Express.Request} req
+   * @param {Express.Response} req
+   * @param {Express.NextFunction} next
+   */
   async createTwibbon(req, res, next) {
     try {
       const { user } = req
@@ -31,6 +55,12 @@ class participantController {
     }
   }
 
+  /**
+   * Upload foto diri yang akan di generate
+   * @param {Express.Request} req
+   * @param {Express.Response} req
+   * @param {Express.NextFunction} next
+   */
   async uploadFotoDiri(req, res, next) {
     try {
       const { user } = req
@@ -47,17 +77,12 @@ class participantController {
     }
   }
 
-  async viewTwibbon(req, res, next) {
-    try {
-      const { user } = req
-      const { eventId } = req.params
-      const result = await this.participantService.viewTwibbon(eventId, user.id)
-      return res.sendSuccess(result)
-    } catch (err) {
-      next(err)
-    }
-  }
-
+  /**
+   * Untuk menghapus twibbon
+   * @param {Express.Request} req
+   * @param {Express.Response} req
+   * @param {Express.NextFunction} next
+   */
   async deleteTwibbon(req, res, next) {
     try {
       const { user } = req
