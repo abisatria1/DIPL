@@ -8,7 +8,7 @@ const auth = require("../helper/auth")
 // type user is 2 = ["campaigner", "participant"]
 /**
  * Check if user was Authorized
- * @param {String} typeUser 
+ * @param {String} typeUser
  * @returns nextFunction
  */
 const passportJwt = (typeUser) => {
@@ -44,8 +44,10 @@ const passportJwt = (typeUser) => {
 
 const userRouter = require("./userRoute")
 const campaignerRouter = require("./campaignerRoute")
+const participantRouter = require("./participantRoute")
 
 router.use("/user", userRouter)
 router.use("/campaigner", passportJwt("campaigner"), campaignerRouter)
+router.use("/participant", passportJwt("participant"), participantRouter)
 
 module.exports = router

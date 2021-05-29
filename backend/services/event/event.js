@@ -43,6 +43,23 @@ class Event extends Service {
   }
 
   /**
+   * Mengambil suatu data event dengan id event
+   * @param {Number} eventId
+   * @returns salah satu data event
+   */
+  async viewDetailEventByParticipant(eventId) {
+    const event = await this.db.Event.findOne({
+      where: { id: eventId },
+    })
+    if (!event) {
+      const err = new Error("Event not Found")
+      err.status = 400
+      throw err
+    }
+    return event
+  }
+
+  /**
    * Mencari data event berdasarkan nama event yang dimiliki oleh suatu campaigner
    * @param {String} eventName
    * @param {Number} campaignerId

@@ -1,8 +1,8 @@
 /**
  * Wrapper for HTTP Response
- * @param {Express.Request} req 
- * @param {Express.Response} res 
- * @param {Express.NextFunction} next 
+ * @param {Express.Request} req
+ * @param {Express.Response} res
+ * @param {Express.NextFunction} next
  * @returns Express.Response
  */
 const wrapperMiddleware = (req, res, next) => {
