@@ -6,8 +6,11 @@ import Register from "../views/Register.vue"
 import Event from "../views/Event.vue"
 import editEvent from "../views/editEvent.vue"
 import addEvent from "../views/addEvent.vue"
+import DashboardParticipant from "../views/DashboardParticipant.vue"
 
 Vue.use(VueRouter)
+
+const baseUrl = "http://localhost:3000"
 
 const routes = [
   {
@@ -20,9 +23,10 @@ const routes = [
     name: "Login",
     component: Login,
     props: {
-      baseUrl: "http://localhost:3000",
+      baseUrl,
       url: {
         login: "/api/user/login",
+        my: "/api/user/my",
       },
     },
   },
@@ -31,11 +35,21 @@ const routes = [
     name: "Register",
     component: Register,
     props: {
-      baseUrl: "http://localhost:3000",
+      baseUrl,
       url: {
         registerCampaigner: "/api/user/register/campaigner",
         registerParticipant: "/api/user/register/participant",
       },
+    },
+  },
+
+  {
+    path: "/participant",
+    name: "dashboard-participant",
+    component: DashboardParticipant,
+    props: {
+      baseUrl,
+      url: {},
     },
   },
   {
@@ -43,7 +57,7 @@ const routes = [
     name: "Event",
     component: Event,
     props: {
-      baseUrl: "http://localhost:3000",
+      baseUrl,
       url: {
         viewAllEvent: "/api/campaigner/event",
       },
@@ -54,7 +68,7 @@ const routes = [
     name: "EventEdit",
     component: editEvent,
     props: {
-      baseUrl: "http://localhost:3000",
+      baseUrl,
       url: {
         viewDetailEvent: "/api/campaigner/event/",
         updateEvent: "/api/campaigner/event/",
@@ -66,7 +80,7 @@ const routes = [
     name: "EventAdd",
     component: addEvent,
     props: {
-      baseUrl: "http://localhost:3000",
+      baseUrl,
       url: {
         createEvent: "/api/campaigner/event",
       },
