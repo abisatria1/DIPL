@@ -26,10 +26,11 @@ const signJwtToken = (payload) => {
  * @returns string data address
  */
 const getGeoIp = async (ip) => {
-  const url = `http://ip-api.com/json/${ip}`
+  const ipApiUrl = `http://ip-api.com/json/${ip}`
   try {
-    const response = await axios.get(url)
-    return response.data.address
+    const metadataIP = await axios.get(ipApiUrl)
+    const address = metadataIP.data.address 
+    return userAddress
   } catch (error) {
     next(error)
   }
