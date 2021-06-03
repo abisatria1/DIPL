@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
-
+const { container } = require("../config/depedency-injection.config")
+const userController = container.resolve("userController")
 // jwt
 const passport = require("passport")
 const auth = require("../helper/auth")
@@ -46,6 +47,7 @@ const userRouter = require("./userRoute")
 const campaignerRouter = require("./campaignerRoute")
 const participantRouter = require("./participantRoute")
 
+router.use("/user/my", passportJwt(), userController.myProfile)
 router.use("/user", userRouter)
 router.use("/campaigner", passportJwt("campaigner"), campaignerRouter)
 router.use("/participant", passportJwt("participant"), participantRouter)

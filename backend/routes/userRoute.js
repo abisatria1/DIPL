@@ -23,4 +23,6 @@ router
     userController.registerCampaigner
   )
 
+router.route("/my").get(userController.myProfile)
+
 module.exports = router

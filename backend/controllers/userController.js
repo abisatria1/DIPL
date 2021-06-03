@@ -95,6 +95,23 @@ class userController {
       next(err)
     }
   }
+
+  /**
+   * Registrasi campaigner
+   * Data req.body = {user = {username,password,email}, campaigner= {nama_camapigner, notelp_campaigner}}
+   * @param {Express.Request} req
+   * @param {Express.Response} res
+   * @param {Express.Nextfunction} next
+   * @returns Express.Response
+   */
+  async myProfile(req, res, next) {
+    try {
+      const { user } = req
+      return res.sendSuccess(user)
+    } catch (err) {
+      next(err)
+    }
+  }
 }
 
 module.exports = userController
