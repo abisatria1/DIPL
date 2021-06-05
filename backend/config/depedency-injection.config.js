@@ -4,6 +4,7 @@ const {
   userController,
   participantController,
 } = require("../controllers")
+const eventControler = require("../controllers/eventController")
 const Campaigner = require("../services/campaigner")
 const Event = require("../services/event/event")
 const Participant = require("../services/participant")
@@ -25,6 +26,7 @@ const setup = () => {
     userController: awilix.asClass(userController),
     campaignerController: awilix.asClass(campaignerController),
     participantController: awilix.asClass(participantController),
+    eventController: awilix.asClass(eventControler),
     db: awilix.asValue(database),
   })
 }

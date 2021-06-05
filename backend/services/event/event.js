@@ -16,6 +16,15 @@ class Event extends Service {
   }
 
   /**
+   * Mengambil seluruh data event pada database
+   * @returns seluruh data event
+   */
+  async viewAllEvent() {
+    const event = await await this.db.Event.findAll({})
+    return event
+  }
+
+  /**
    * Mengambil seluruh data event pada database yang dimiliki oleh suatu campaigner
    * @param {Number} campaignerId
    * @returns seluruh data event yang dimiliki oleh campaigner dengan id = campaingerId
