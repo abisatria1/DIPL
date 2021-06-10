@@ -8,7 +8,7 @@
   },
   "scripts": {
     "set-node-env": "set NODE_ENV=test PORT=8080",
-    "test": "npm run set-node-env && jest --runInBand --silent",
+    "test": "npm run set-node-env && jest --runInBand --silent --verbose",
     "test:debug": "npm run set-node-env && jest --runInBand",
     "start:dev": "set NODE_ENV=dev && nodemon server.js",
     "start": "set NODE_ENV=dev && node server.js"
