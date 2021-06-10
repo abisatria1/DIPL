@@ -26,7 +26,7 @@
   <div class="welcome-message">
     <div class="container body-message">
       <h1>Hi, {{ nama }} !</h1>
-      <h5>There's so many event for you today, let's go participate</h5>
+      <h5>{{ message }}</h5>
     </div>
   </div>
 </template>
@@ -36,6 +36,10 @@ export default {
   name: "WelcomeMessage",
   props: {
     nama: String,
+    message: {
+      type: String,
+      default: "There's so many event for you today, let's go participate",
+    },
   },
 }
 </script>

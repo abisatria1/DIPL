@@ -183,7 +183,7 @@ export default {
         axios.defaults.headers.common["Authorization"] = token
 
         if (profile.nama_campaigner) {
-          return this.$router.push("/event")
+          return this.$router.push({ name: "dashboard-campaigner" })
         } else {
           return this.$router.push({ name: "dashboard-participant" })
         }

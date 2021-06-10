@@ -3,10 +3,13 @@ import Swal from "sweetalert2"
 export default {
   success(text) {
     Swal.fire({
+      position: "top-end",
       title: "Success",
       text: text,
       icon: "success",
-      confirmButtonText: "Ok",
+      showConfirmButton: false,
+      timer: 1500,
+      backdrop: false,
     })
   },
 

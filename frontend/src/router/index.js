@@ -7,6 +7,7 @@ import Event from "../views/Event.vue"
 import editEvent from "../views/editEvent.vue"
 import addEvent from "../views/addEvent.vue"
 import DashboardParticipant from "../views/DashboardParticipant.vue"
+import dashboardCampaigner from "../views/dashboardCampaigner.vue"
 
 Vue.use(VueRouter)
 
@@ -53,6 +54,17 @@ const routes = [
     },
   },
   {
+    path: "/campaigner",
+    name: "dashboard-campaigner",
+    component: dashboardCampaigner,
+    props: {
+      baseUrl,
+      url: {
+        viewAllEventByCampaigner: "/api/campaigner/event",
+      },
+    },
+  },
+  {
     path: "/event",
     name: "Event",
     component: Event,
@@ -65,7 +77,7 @@ const routes = [
   },
   {
     path: "/event/edit/:id",
-    name: "EventEdit",
+    name: "editEvent",
     component: editEvent,
     props: {
       baseUrl,
@@ -77,7 +89,7 @@ const routes = [
   },
   {
     path: "/event/add",
-    name: "EventAdd",
+    name: "createEvent",
     component: addEvent,
     props: {
       baseUrl,

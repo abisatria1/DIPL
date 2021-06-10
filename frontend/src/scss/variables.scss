@@ -17,3 +17,46 @@ $secondary-color: #1baaa0;
 $black-font-color: #14234b;
 $green-font-color: #1baaa0;
 $grey-font-color: #77748f;
+
+// button color
+$btn-green: #1baaa0;
+$btn-red: #d9534f;
+$btn-yellow: #ffbd44;
+
+// mixins
+@mixin button($btnColor, $width: 100px) {
+  background-color: $btnColor !important;
+  color: white !important;
+  border-radius: 7px;
+  width: $width;
+  border: 1px solid $btnColor;
+  transition: 0.2s;
+
+  &:hover {
+    color: $btnColor !important;
+    background-color: transparent !important;
+    border: 1px solid $btnColor;
+
+    svg {
+      fill: $btnColor !important;
+    }
+  }
+
+  svg {
+    fill: white !important;
+  }
+}
+
+@mixin borderedButton($btnColor, $width: 100px) {
+  color: $btnColor !important;
+  background-color: transparent !important;
+  border: 1px solid $btnColor;
+  border-radius: 7px;
+  width: $width;
+  transition: 0.2s;
+
+  &:hover {
+    background-color: $btnColor !important;
+    color: white !important;
+  }
+}
