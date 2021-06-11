@@ -78,7 +78,7 @@
             >
           </li>
           <li class="nav-item pe-custom">
-            <a class="nav-link" href="#">Create Campaign</a>
+            <a class="nav-link" href="/event/add">Create Campaign</a>
           </li>
         </ul>
 

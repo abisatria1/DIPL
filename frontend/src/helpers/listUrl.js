@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3000"
+const BASE_URL = "http://localhost:3000"
 const API_URL = {
   login: "/api/user/login",
   my: "/api/user/my",
@@ -10,11 +10,12 @@ const API_URL = {
   updateEvent: "/api/campaigner/event/",
   createEvent: "/api/campaigner/event",
   deleteEvent: "/api/campaigner/event/",
+  updateTemplateTwibbon: "/api/campaigner/event/template/",
 }
 
 for (const property in API_URL) {
   const url = API_URL[property]
-  API_URL[property] = baseUrl + url
+  API_URL[property] = BASE_URL + url
 }
 
-export { API_URL }
+export { API_URL, BASE_URL }

@@ -73,13 +73,21 @@
 <template>
   <div class="edit-event-page">
     <campaigner-navbar />
+    <edit-twibbon
+      v-bind:show="showModal"
+      v-bind:twibbon="template_twibbon"
+      @modalClosed="handleModalClosed"
+      @twibbonUpdated="handleTwibbonUpdated"
+    />
     <div class="container">
       <b-card
         title="Edit Event"
         sub-title="Please ensure your information is right and responsible. Let's Make awesome things!"
         class="mt-5"
       >
-        <b-button class="btn-yellow mt-3 mb-3">Edit Twibbon Template</b-button>
+        <b-button class="btn-yellow mt-3 mb-3" @click="editTwibbon"
+          >Edit Twibbon Template</b-button
+        >
         <b-form @submit="onSubmit" v-if="show">
           <b-form-group
             id="input-group-1"
@@ -161,8 +169,9 @@
 <script>
 import axios from "axios"
 import campaignerNavbar from "../components/campaignerNavbar.vue"
+import EditTwibbon from "../components/editTwibbon.vue"
 export default {
-  components: { campaignerNavbar },
+  components: { campaignerNavbar, EditTwibbon },
 
   props: {
     baseUrl: String,
@@ -179,8 +188,10 @@ export default {
         jumlah_anggota: null,
         tanggal_event: "",
       },
+      template_twibbon: "",
       show: true,
       isHideSpinner: true,
+      showModal: false,
     }
   },
 
@@ -195,7 +206,7 @@ export default {
     }
   },
 
-  mounted() {
+  created() {
     this.init()
   },
   methods: {
@@ -214,6 +225,7 @@ export default {
           this.form.deskripsi_event = row.deskripsi_event
           this.form.jumlah_anggota = row.jumlah_anggota
           this.form.tanggal_event = row.tanggal_event
+          this.template_twibbon = row.template_twibbon
         })
         .catch((error) => {
           const message = error.response
@@ -251,6 +263,15 @@ export default {
     },
     onCancel() {
       return this.$router.push({ name: "dashboard-campaigner" })
+    },
+    editTwibbon() {
+      this.showModal = true
+    },
+    handleModalClosed() {
+      this.showModal = false
+    },
+    handleTwibbonUpdated() {
+      this.init()
     },
   },
 }
