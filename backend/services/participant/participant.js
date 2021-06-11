@@ -48,10 +48,19 @@ class Participant extends Service {
       throw error
     }
     // generate
+    const outputPath = `image/hasil_foto/${participantId}${eventId}${Date.now()}.jpg`
+    generateTwibbon(
+      event.template_twibbon,
+      twibbon.foto_participant,
+      outputPath
+    )
     // save hasil generate ke db
+    await twibbon.update({ hasil_foto: outputPath })
     return {
+      twibbonId: twibbon.twibbonId,
       event: event.template_twibbon,
       foto_participant: twibbon.foto_participant,
+      hasil_foto: outputPath,
     }
   }
 
