@@ -59,6 +59,7 @@ class Event extends Service {
   async viewDetailEventByParticipant(eventId) {
     const event = await this.db.Event.findOne({
       where: { id: eventId },
+      include: [this.db.Campaigner],
     })
     if (!event) {
       const err = new Error("Event not Found")

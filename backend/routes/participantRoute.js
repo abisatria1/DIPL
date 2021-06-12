@@ -11,11 +11,10 @@ const { uploadFotoParticipant, isUploadPhoto } = require("../middleware/upload")
 
 router
   .route("/twibbon/:eventId")
-  .patch(participantController.createTwibbon)
   .post(
     uploadFotoParticipant.single("foto_participant"),
     isUploadPhoto(),
-    participantController.uploadFotoDiri
+    participantController.createTwibbon
   )
   .get(participantController.viewTwibbon)
 

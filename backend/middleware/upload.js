@@ -1,7 +1,7 @@
 const multer = require("multer")
 const { fileFilterBySchema } = require("../helper/uploadFileFilter")
 const eventSchema = require("../services/event/event.schema")
-const SIZE_UPLOAD_LIMIT = 1024 * 1024 * 5; // 5 MB
+const SIZE_UPLOAD_LIMIT = 1024 * 1024 * 5 // 5 MB
 /**
  * Check if photo was updated
  * @returns nextFunction
@@ -10,7 +10,8 @@ const isUploadPhoto = () => {
   return async (req, res, next) => {
     const photo = req.file || req.files
 
-    if (!photo || ( Array.isArray(photo) && !photo.length)) return res.sendError(undefined, new Error("Please insert photo"), 422)
+    if (!photo || (Array.isArray(photo) && !photo.length))
+      return res.sendError(undefined, new Error("Please insert photo"), 422)
 
     next()
   }
@@ -69,7 +70,7 @@ const updateTemplateTwibbon = multer({
  * Instansiasi multer untuk upload foto diri
  */
 const uploadFotoParticipant = multer({
-  storage,
+  storage: multer.memoryStorage(),
   limits: {
     fileSize: SIZE_UPLOAD_LIMIT,
   },

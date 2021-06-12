@@ -1,8 +1,8 @@
 const fs = require("fs")
 
 /**
- * delete file with given path 
- * @param {fs.PathLike} path 
+ * delete file with given path
+ * @param {fs.PathLike} path
  */
 const deleteFile = (path) => {
   try {
@@ -16,7 +16,7 @@ const deleteFile = (path) => {
 
 /**
  * Check if file is exists
- * @param {fs.PathLike} path 
+ * @param {fs.PathLike} path
  * @returns bool if file exists or not
  */
 const findFile = (path) => {
@@ -25,15 +25,20 @@ const findFile = (path) => {
 
 /**
  * Count Number of files
- * @param {fs.PathLike} dir 
+ * @param {fs.PathLike} dir
  * @returns number of file on path
  */
 const countFiles = (dir) => {
   return fs.readdirSync(dir)
 }
 
+const writeFile = (path, buffer) => {
+  return fs.writeFileSync(path, buffer, "ascii")
+}
+
 module.exports = {
   deleteFile,
   findFile,
   countFiles,
+  writeFile,
 }

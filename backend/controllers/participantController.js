@@ -12,7 +12,6 @@ class participantController {
     this.participantService = participantService
     // javascript binding setiap ada method baru wajib di binding supaya bisa menggunakan this
     this.createTwibbon = this.createTwibbon.bind(this)
-    this.uploadFotoDiri = this.uploadFotoDiri.bind(this)
     this.viewTwibbon = this.viewTwibbon.bind(this)
     this.deleteTwibbon = this.deleteTwibbon.bind(this)
   }
@@ -35,8 +34,7 @@ class participantController {
   }
 
   /**
-   * Generate twibbon dimana foto participant dan template twibbon sudah
-   * di database
+   * generate twibbon dengan mengupload foto diri
    * @param {Express.Request} req
    * @param {Express.Response} req
    * @param {Express.NextFunction} next
@@ -45,28 +43,8 @@ class participantController {
     try {
       const { user } = req
       const { eventId } = req.params
+      const foto = req.file
       const result = await this.participantService.createTwibbon(
-        user.id,
-        eventId
-      )
-      return res.sendSuccess(result)
-    } catch (err) {
-      next(err)
-    }
-  }
-
-  /**
-   * Upload foto diri yang akan di generate
-   * @param {Express.Request} req
-   * @param {Express.Response} req
-   * @param {Express.NextFunction} next
-   */
-  async uploadFotoDiri(req, res, next) {
-    try {
-      const { user } = req
-      const { eventId } = req.params
-      const foto = req.file.path
-      const result = await this.participantService.uploadFotoDiri(
         eventId,
         user.id,
         foto

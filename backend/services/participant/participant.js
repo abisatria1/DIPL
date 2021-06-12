@@ -1,7 +1,8 @@
 const Service = require("../Service")
 const { generateTwibbon } = require("./utils")
-const { deleteFile } = require("../../helper/file")
+const { deleteFile, findFile, writeFile } = require("../../helper/file")
 const Op = require("sequelize").Op
+const multer = require("multer")
 class Participant extends Service {
   /**
    * depedency injection db.
@@ -30,55 +31,32 @@ class Participant extends Service {
   }
 
   /**
-   * create twibbon
-   * @param {Number} idEvent
-   * @param {fs.File} foto
-   * @returns
-   */
-  async createTwibbon(participantId, eventId) {
-    const event = await this.eventService.viewDetailEventByParticipant(eventId)
-    const twibbon = await this.db.EventParticipant.findOne({
-      where: {
-        [Op.and]: [{ eventId }, { participantId }],
-      },
-    })
-    if (!event || !twibbon) {
-      const error = new Error("Can't create twibbon, data not found")
-      error.status = 404
-      throw error
-    }
-    // generate
-    const outputPath = `image/hasil_foto/${participantId}${eventId}${Date.now()}.jpg`
-    generateTwibbon(
-      event.template_twibbon,
-      twibbon.foto_participant,
-      outputPath
-    )
-    // save hasil generate ke db
-    await twibbon.update({ hasil_foto: outputPath })
-    return {
-      twibbonId: twibbon.twibbonId,
-      event: event.template_twibbon,
-      foto_participant: twibbon.foto_participant,
-      hasil_foto: outputPath,
-    }
-  }
-
-  /**
-   * upload Foto Diri
+   * create twibbon dengan upload foto diri
    * @param {Number} eventId
    * @param {Number} participantId
-   * @param {String} foto
+   * @param {multer.file} foto
    * @returns Integer
    */
-  async uploadFotoDiri(eventId, participantId, foto) {
+  async createTwibbon(eventId, participantId, foto) {
     const event = await this.eventService.viewDetailEventByParticipant(eventId)
+
+    // generate
+    const fotoDiriOutputPath = `image/foto_participant/${Date.now()}_${
+      foto.originalname
+    }`
+    const hasilOutputPath = `image/hasil_foto/${participantId}${eventId}${Date.now()}.jpg`
+
+    const resFoto = await generateTwibbon(event.template_twibbon, foto.buffer)
+    writeFile(fotoDiriOutputPath, foto.buffer)
+    writeFile(hasilOutputPath, resFoto)
+
     const result = await this.db.EventParticipant.create({
-      foto_participant: foto,
+      foto_participant: fotoDiriOutputPath,
       participantId,
       eventId: event.id,
+      hasil_foto: hasilOutputPath,
     })
-    return result
+    return { ...result, hasil_foto_buffer: resFoto }
   }
 
   /**
