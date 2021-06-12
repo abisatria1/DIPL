@@ -225,6 +225,7 @@ export default {
         this.alreadyGenerate = true
 
         this.isHideSpinner = true
+        this.messageHelpers.success("Success generate twibbon, enjoy!")
       } catch (error) {
         this.isHideSpinner = true
 
@@ -285,16 +286,18 @@ export default {
     async onReset() {
       try {
         this.isHideSpinner = false
+        const twibbon = this.twibbon.dataValues
+          ? this.twibbon.dataValues
+          : this.twibbon
         const config = {
           method: "DELETE",
           url:
             API_URL.deleteTwibbon +
-            `${this.$route.params.eventId}/${this.twibbon.twibbonId}`,
+            `${this.$route.params.eventId}/${twibbon.twibbonId}`,
           headers: {
             authorization: this.$session.get("jwtToken"),
           },
         }
-
         await axios(config)
         this.twibbon = null
         this.alreadyGenerate = false
