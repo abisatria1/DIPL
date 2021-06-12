@@ -11,6 +11,7 @@ class eventControler {
     this.eventService = eventService
     // javascript binding setiap ada method baru wajib di binding supaya bisa menggunakan this
     this.viewAllEvent = this.viewAllEvent.bind(this)
+    this.viewDetailEvent = this.viewDetailEvent.bind(this)
   }
 
   /**
@@ -22,6 +23,24 @@ class eventControler {
   async viewAllEvent(req, res, next) {
     try {
       const event = await this.eventService.viewAllEvent()
+      return res.sendSuccess(event)
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  /**
+   * Melihat detail event
+   * @param {Express.Request} req
+   * @param {Express.Response} req
+   * @param {Express.NextFunction} next
+   */
+  async viewDetailEvent(req, res, next) {
+    try {
+      const { eventId } = req.params
+      const event = await this.eventService.viewDetailEventByParticipant(
+        eventId
+      )
       return res.sendSuccess(event)
     } catch (err) {
       next(err)
