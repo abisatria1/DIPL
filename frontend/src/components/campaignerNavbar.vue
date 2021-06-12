@@ -69,7 +69,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light" id="campaigner-navbar">
     <div class="container">
-      <a class="navbar-brand" href="/">Tweebz</a>
+      <a class="navbar-brand" href="/campaigner">Tweebz</a>
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav m-auto mt-2 mt-lg-0">
           <li class="nav-item active pe-custom">
