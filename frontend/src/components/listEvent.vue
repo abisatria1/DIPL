@@ -13,6 +13,9 @@
       padding: 20px 15px;
       text-align: justify;
       overflow: hidden;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-bottom: 20px;
 
       img {
         height: 255px;
@@ -30,6 +33,10 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
+    }
+
+    .card-item:hover {
+      background-color: rgba(0, 0, 0, 0.226);
     }
 
     .text-center {
@@ -113,6 +120,9 @@ export default {
       events.forEach((event) => {
         const cardItem = document.createElement("div")
         cardItem.className = "card-item"
+        cardItem.addEventListener("click", () => {
+          this.handleItemClick(event.id)
+        })
 
         const templateTwibbon = document.createElement("img")
         templateTwibbon.src = `http://localhost:3000/${event.template_twibbon}`
@@ -138,6 +148,10 @@ export default {
 
         wrapper.appendChild(cardItem)
       })
+    },
+
+    handleItemClick(eventId) {
+      this.$router.push({ name: "detail-event", params: { eventId } })
     },
   },
 }

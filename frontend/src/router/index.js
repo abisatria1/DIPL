@@ -8,6 +8,7 @@ import editEvent from "../views/editEvent.vue"
 import addEvent from "../views/addEvent.vue"
 import DashboardParticipant from "../views/DashboardParticipant.vue"
 import dashboardCampaigner from "../views/dashboardCampaigner.vue"
+import DetailEvent from "../views/detailEvent.vue"
 
 Vue.use(VueRouter)
 
@@ -53,6 +54,13 @@ const routes = [
       url: {},
     },
   },
+
+  {
+    path: "/participant/event/:eventId",
+    name: "detail-event",
+    component: DetailEvent,
+  },
+
   {
     path: "/campaigner",
     name: "dashboard-campaigner",

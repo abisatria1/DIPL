@@ -11,6 +11,10 @@ const API_URL = {
   createEvent: "/api/campaigner/event",
   deleteEvent: "/api/campaigner/event/",
   updateTemplateTwibbon: "/api/campaigner/event/template/",
+  viewDetailEventByCampaigner: "/api/event/",
+  createTwibbon: "/api/participant/twibbon/",
+  viewTwibbon: "/api/participant/twibbon/",
+  deleteTwibbon: "/api/participant/twibbon/",
 }
 
 for (const property in API_URL) {
