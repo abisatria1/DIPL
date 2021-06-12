@@ -22,6 +22,7 @@
           type="text"
           placeholder="Type event or campaign name's"
           required
+          @input="onChange"
         ></b-form-input>
       </b-form-group>
     </form>
@@ -29,12 +30,42 @@
 </template>
 
 <script>
+import axios from "axios"
+import { API_URL } from "../helpers/listUrl"
 export default {
   name: "SearchEvent",
   data() {
     return {
       namaEvent: "",
     }
+  },
+
+  methods: {
+    async onChange() {
+      try {
+        const events = await this.findEvent(this.namaEvent)
+        this.$emit("eventChanged", events)
+      } catch (error) {
+        const message = error.response
+          ? error.response.data.message
+          : error.message
+        this.messageHelpers.error(message)
+        console.log(error.response)
+      }
+    },
+
+    async findEvent(nama_event) {
+      const config = {
+        method: "get",
+        url: API_URL.searchEvent,
+        params: {
+          nama_event,
+        },
+      }
+
+      const result = await axios(config)
+      return result.data.data
+    },
   },
 }
 </script>

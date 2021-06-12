@@ -2,8 +2,8 @@
   <div>
     <participant-navbar />
     <welcome-message nama="Kadek Abi Satria Adinatha Vidya Putra" />
-    <search-event />
-    <list-event />
+    <search-event @eventChanged="handleEventChanged" />
+    <list-event v-bind:listEvent="events" />
   </div>
 </template>
 
@@ -18,6 +18,12 @@ export default {
     url: {},
   },
 
+  data() {
+    return {
+      events: [],
+    }
+  },
+
   beforeCreate() {
     if (!this.$session.exists()) {
       return this.$router.push("/login")
@@ -27,6 +33,12 @@ export default {
     if (!user.nama_participant) {
       return this.$router.go(-1)
     }
+  },
+
+  methods: {
+    handleEventChanged(events) {
+      this.events = events
+    },
   },
 
   components: {

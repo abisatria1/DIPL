@@ -63,51 +63,57 @@
 
 <script>
 import axios from "axios"
+import { API_URL } from "../helpers/listUrl"
 export default {
   name: "ListEvent",
   props: {
     listEvent: Array,
-    url: {
-      baseUrl: {
-        type: String,
-        default: "http://localhost:3000",
-      },
-      viewAllEvent: {
-        type: String,
-        default: "/api/event",
-      },
-    },
   },
   data() {
     return {
       isHideSpinner: true,
+      events: this.$props.listEvent || [],
     }
   },
-  async created() {
-    this.isHideSpinner = false
-    try {
-      let events = []
-      if (!events.length) {
-        events = await this.getAllEvent()
-      }
 
-      this.appendAllEvents(events)
-      this.isHideSpinner = true
-    } catch (error) {
-      this.isHideSpinner = true
-      const message = error.response
-        ? error.response.data.message
-        : error.message
-      this.messageHelpers.error(message)
-      console.log(error.response)
-    }
+  watch: {
+    async listEvent(newValue) {
+      console.log({ events: this.events })
+      this.events = newValue
+      await this.init()
+    },
+  },
+
+  async mounted() {
+    await this.init()
   },
 
   methods: {
+    async init() {
+      this.isHideSpinner = false
+      try {
+        let events = this.events
+        if (!events.length) {
+          events = await this.getAllEvent()
+        }
+
+        const wrapper = document.getElementById("wrapper")
+        wrapper.innerHTML = ""
+        this.appendAllEvents(events)
+        this.isHideSpinner = true
+      } catch (error) {
+        this.isHideSpinner = true
+        const message = error.response
+          ? error.response.data.message
+          : error.message
+        this.messageHelpers.error(message)
+        console.log(error.response)
+      }
+    },
     async getAllEvent() {
       const config = {
         method: "get",
-        url: `http://localhost:3000/api/event`,
+        url: API_URL.viewAllEvent,
       }
       const { data } = await axios(config)
       const events = data.data

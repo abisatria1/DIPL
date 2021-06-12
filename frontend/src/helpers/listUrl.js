@@ -5,7 +5,6 @@ const API_URL = {
   registerCampaigner: "/api/user/register/campaigner",
   registerParticipant: "/api/user/register/participant",
   viewAllEventByCampaigner: "/api/campaigner/event",
-  viewAllEvent: "/api/campaigner/event",
   viewDetailEvent: "/api/campaigner/event/",
   updateEvent: "/api/campaigner/event/",
   createEvent: "/api/campaigner/event",
@@ -15,6 +14,8 @@ const API_URL = {
   createTwibbon: "/api/participant/twibbon/",
   viewTwibbon: "/api/participant/twibbon/",
   deleteTwibbon: "/api/participant/twibbon/",
+  viewAllEvent: "/api/event",
+  searchEvent: "/api/event/search",
 }
 
 for (const property in API_URL) {
