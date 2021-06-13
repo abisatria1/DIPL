@@ -14,6 +14,10 @@
     @include button($btn-green, 150px);
   }
 
+  .green-120-btn {
+    @include button($btn-green, 120px);
+  }
+
   .card-title {
     padding: 0 !important;
     margin: 0 !important;
@@ -62,6 +66,16 @@
       height: 100px;
     }
   }
+
+  .table .button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    button {
+      margin: 2px 0 !important;
+    }
+  }
 }
 </style>
 
@@ -103,18 +117,26 @@
           />
         </template>
         <template #cell(id_event)="dataEvent">
-          <b-button
-            @click="toEditEvent(dataEvent.item.id_event, $event.target)"
-            variant="warning"
-            class="btn-yellow"
-            >Edit Event</b-button
-          >
-          <b-button
-            @click="deleteEvent(dataEvent.item.id_event, $event.target)"
-            class="ml-3 btn-red"
-            variant="danger"
-            >Delete Event</b-button
-          >
+          <div class="button-wrapper">
+            <b-button
+              @click="toViewParticipant(dataEvent.item.id_event, $event.target)"
+              variant="info"
+              class="green-120-btn"
+              >View</b-button
+            >
+            <b-button
+              @click="toEditEvent(dataEvent.item.id_event, $event.target)"
+              variant="warning"
+              class="btn-yellow"
+              >Edit Event</b-button
+            >
+            <b-button
+              @click="deleteEvent(dataEvent.item.id_event, $event.target)"
+              class="ml-3 btn-red"
+              variant="danger"
+              >Delete Event</b-button
+            >
+          </div>
         </template>
       </b-table>
     </b-card>
@@ -174,6 +196,13 @@ export default {
 
     toEditEvent(id_event) {
       this.$router.push({ name: "editEvent", params: { id: id_event } })
+    },
+
+    toViewParticipant(eventId) {
+      this.$router.push({
+        name: "view-event-participant",
+        params: { eventId },
+      })
     },
 
     async deleteEvent(id_event) {

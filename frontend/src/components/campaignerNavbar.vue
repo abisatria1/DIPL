@@ -72,12 +72,18 @@
       <a class="navbar-brand" href="/campaigner">Tweebz</a>
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav m-auto mt-2 mt-lg-0">
-          <li class="nav-item active pe-custom">
+          <li
+            class="nav-item pe-custom"
+            :class="{ active: activeNavbar == 'home' }"
+          >
             <a class="nav-link" href="/campaigner"
               >Home <span class="sr-only">(current)</span></a
             >
           </li>
-          <li class="nav-item pe-custom">
+          <li
+            class="nav-item pe-custom"
+            :class="{ active: activeNavbar == 'createEvent' }"
+          >
             <a class="nav-link" href="/event/add">Create Campaign</a>
           </li>
         </ul>
@@ -102,6 +108,12 @@
 <script>
 export default {
   name: "campaigner-navbar",
+  props: {
+    activeNavbar: {
+      type: String,
+      default: "",
+    },
+  },
   methods: {
     logOut() {
       this.$session.destroy()

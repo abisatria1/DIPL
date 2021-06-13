@@ -80,6 +80,16 @@ class Campaigner extends Service {
   async findEvent(namaEvent, campaignerId) {
     return await this.eventService.findByName(namaEvent, campaignerId)
   }
+
+  /**
+   * Mencari data seluruh participant yang sedang mengikuti event
+   * @param {Number} eventId
+   * @param {Number} campaignerId
+   * @returns Promise<Event>
+   */
+  async viewEventParticipant(eventId, campaignerId) {
+    return await this.eventService.viewEventParticipant(eventId, campaignerId)
+  }
 }
 
 module.exports = Campaigner

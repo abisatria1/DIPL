@@ -270,7 +270,7 @@ export default {
     async setEvent() {
       const config = {
         method: "GET",
-        url: API_URL.viewDetailEventByCampaigner + this.$route.params.eventId,
+        url: API_URL.viewDetailEvent + this.$route.params.eventId,
         headers: {
           authorization: this.$session.get("jwtToken"),
         },

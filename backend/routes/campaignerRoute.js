@@ -12,6 +12,9 @@ const {
 } = require("../middleware/upload")
 const schema = require("../services/event/event.schema")
 
+router
+  .route("/event/participant/:eventId")
+  .get(campaignerController.viewEventParticipant)
 router.route("/find/event").get(campaignerController.findEvent)
 
 router

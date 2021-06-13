@@ -10,6 +10,7 @@ import DashboardParticipant from "../views/DashboardParticipant.vue"
 import dashboardCampaigner from "../views/dashboardCampaigner.vue"
 import DetailEvent from "../views/detailEvent.vue"
 import AllTwibbon from "../views/allTwibbon.vue"
+import ViewParticipant from "../views/viewParticipant.vue"
 
 Vue.use(VueRouter)
 
@@ -79,6 +80,13 @@ const routes = [
       },
     },
   },
+
+  {
+    path: "/campaigner/event/:eventId",
+    name: "view-event-participant",
+    component: ViewParticipant,
+  },
+
   {
     path: "/event",
     name: "Event",

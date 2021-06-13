@@ -69,7 +69,7 @@
 
 <template>
   <div class="create-event-page">
-    <campaigner-navbar />
+    <campaigner-navbar activeNavbar="createEvent" />
     <div class="container">
       <b-card
         title="Add Campaign"

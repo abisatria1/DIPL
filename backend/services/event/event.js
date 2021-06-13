@@ -217,6 +217,32 @@ class Event extends Service {
     })
     return events
   }
+
+  /**
+   * mendapatkan data dari seluruh participant yang mengikuti event dengan id = eventId
+   * campaigner id = campaignerId
+   * @param {Number} eventId
+   * @param {Number} campaignerId
+   * @returns [Events]
+   */
+  async viewEventParticipant(eventId, campaignerId) {
+    // mencari apakah event ada atau tidak di database
+    const event = await this.db.Event.findOne({
+      where: {
+        [Op.and]: [{ id: eventId }, { campaignerId }],
+      },
+    })
+    if (!event) {
+      const error = new Error("Event not found")
+      error.status = 400
+      throw error
+    }
+
+    const events = await event.getParticipants({
+      include: [this.db.User],
+    })
+    return events
+  }
 }
 
 module.exports = Event

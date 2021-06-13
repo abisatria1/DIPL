@@ -1,6 +1,6 @@
 <template>
   <div>
-    <campaigner-navbar />
+    <campaigner-navbar activeNavbar="home" />
     <welcome-message
       v-bind:nama="user.nama_campaigner"
       message="Hello, Let's create amazing work today!"

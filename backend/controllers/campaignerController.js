@@ -18,6 +18,7 @@ class campaignerController {
     this.viewEvent = this.viewEvent.bind(this)
     this.findEvent = this.findEvent.bind(this)
     this.updateEventTemplateTwibbon = this.updateEventTemplateTwibbon.bind(this)
+    this.viewEventParticipant = this.viewEventParticipant.bind(this)
   }
 
   /**
@@ -174,6 +175,28 @@ class campaignerController {
       campaignerId
     )
     return res.sendSuccess(result)
+  }
+
+  /**
+   * Mendapatkan seluruh participant dari suatu event yang dibuat
+   * @param {Express.Request} req
+   * @param {Express.Response} res
+   * @param {Express.Nextfunction} next
+   * @returns Express.Response
+   */
+  async viewEventParticipant(req, res, next) {
+    try {
+      const { user } = req
+      const { eventId } = req.params
+
+      const result = await this.campaignerService.viewEventParticipant(
+        eventId,
+        user.id
+      )
+      return res.sendSuccess(result)
+    } catch (err) {
+      next(err)
+    }
   }
 }
 
