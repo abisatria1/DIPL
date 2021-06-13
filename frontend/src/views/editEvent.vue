@@ -91,21 +91,21 @@
         <b-form @submit="onSubmit" v-if="show">
           <b-form-group
             id="input-group-1"
-            label="Nama Event:"
+            label="Event Name:"
             label-for="input-1"
           >
             <b-form-input
               id="input-1"
               v-model="form.nama_event"
               type="text"
-              placeholder="Nama Event"
+              placeholder="Event Name"
               required
             ></b-form-input>
           </b-form-group>
 
           <b-form-group
             id="input-group-4"
-            label="Tanggal Event:"
+            label="Event Date:"
             label-for="input-4"
           >
             <b-form-datepicker
@@ -116,28 +116,28 @@
 
           <b-form-group
             id="input-group-4"
-            label="Jumlah Anggota:"
+            label="Total Participant:"
             label-for="input-4"
           >
             <b-form-input
               id="input-4"
               v-model="form.jumlah_anggota"
               type="number"
-              placeholder="Jumlah Anggota"
+              placeholder="Total Participant"
               required
             ></b-form-input>
           </b-form-group>
 
           <b-form-group
             id="input-group-2"
-            label="Deskripsi Event:"
+            label="Event Description:"
             label-for="input-2"
           >
             <b-form-textarea
               id="input-2"
               v-model="form.deskripsi_event"
               type="text"
-              placeholder="Deskripsi Event"
+              placeholder="Event Description"
             ></b-form-textarea>
           </b-form-group>
 
