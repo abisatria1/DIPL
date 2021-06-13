@@ -27,6 +27,8 @@ $btn-yellow: #ffbd44;
 @mixin button($btnColor, $width: 100px) {
   background-color: $btnColor !important;
   color: white !important;
+  font-weight: $medium-font-weight;
+  font-size: 16px;
   border-radius: 7px;
   width: $width;
   border: 1px solid $btnColor;
@@ -50,6 +52,8 @@ $btn-yellow: #ffbd44;
 @mixin borderedButton($btnColor, $width: 100px) {
   color: $btnColor !important;
   background-color: transparent !important;
+  font-weight: $medium-font-weight;
+  font-size: 16px;
   border: 1px solid $btnColor;
   border-radius: 7px;
   width: $width;

@@ -9,6 +9,7 @@ import addEvent from "../views/addEvent.vue"
 import DashboardParticipant from "../views/DashboardParticipant.vue"
 import dashboardCampaigner from "../views/dashboardCampaigner.vue"
 import DetailEvent from "../views/detailEvent.vue"
+import AllTwibbon from "../views/allTwibbon.vue"
 
 Vue.use(VueRouter)
 
@@ -59,6 +60,12 @@ const routes = [
     path: "/participant/event/:eventId",
     name: "detail-event",
     component: DetailEvent,
+  },
+
+  {
+    path: "/participant/my/twibbons",
+    name: "view-all-twibbon",
+    component: AllTwibbon,
   },
 
   {

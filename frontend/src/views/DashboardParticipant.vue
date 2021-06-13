@@ -1,6 +1,6 @@
 <template>
   <div>
-    <participant-navbar />
+    <participant-navbar activeNavbar="home" />
     <welcome-message nama="Kadek Abi Satria Adinatha Vidya Putra" />
     <search-event @eventChanged="handleEventChanged" />
     <list-event v-bind:listEvent="events" />

@@ -72,13 +72,21 @@
       <a class="navbar-brand" href="/participant">Tweebz</a>
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav m-auto mt-2 mt-lg-0">
-          <li class="nav-item active pe-custom">
+          <li
+            class="nav-item pe-custom"
+            :class="{ active: activeNavbar == 'home' }"
+          >
             <a class="nav-link" href="/participant"
               >Home <span class="sr-only">(current)</span></a
             >
           </li>
-          <li class="nav-item pe-custom">
-            <a class="nav-link" href="#">Your Event</a>
+          <li
+            class="nav-item pe-custom"
+            :class="{ active: activeNavbar == 'twibbon' }"
+          >
+            <a class="nav-link" href="/participant/my/twibbons"
+              >Your Twibbons</a
+            >
           </li>
         </ul>
 
@@ -102,6 +110,13 @@
 <script>
 export default {
   name: "participant-navbar",
+  props: {
+    activeNavbar: {
+      type: String,
+      default: "",
+    },
+  },
+
   methods: {
     logOut() {
       this.$session.destroy()

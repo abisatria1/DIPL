@@ -16,6 +16,7 @@ const API_URL = {
   deleteTwibbon: "/api/participant/twibbon/",
   viewAllEvent: "/api/event",
   searchEvent: "/api/event/search",
+  viewAllTwibbon: "/api/participant/twibbon",
 }
 
 for (const property in API_URL) {
