@@ -21,6 +21,7 @@ const API_URL = {
   campaignerUpdateProfile: "/api/campaigner/update/profile",
   updateEmail: "/api/user/update/email",
   updatePassword: "/api/user/update/password",
+  participantUpdateProfile: "/api/participant/update/profile",
 }
 
 for (const property in API_URL) {

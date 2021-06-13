@@ -13,6 +13,8 @@ import AllTwibbon from "../views/allTwibbon.vue"
 import ViewParticipant from "../views/viewParticipant.vue"
 import CampaignerUpdateProfile from "../views/campaignerUpdateProfile.vue"
 import CampaignerUpdateAccount from "../views/campaignerUpdateAccount.vue"
+import ParticipantUpdateProfile from "../views/participantUpdateProfile.vue"
+import ParticipantUpdateAccount from "../views/participantUpdateAccount.vue"
 
 Vue.use(VueRouter)
 
@@ -132,6 +134,16 @@ const routes = [
     path: "/campaigner/account",
     name: "campaigner-update-account",
     component: CampaignerUpdateAccount,
+  },
+  {
+    path: "/participant/profile",
+    name: "participant-update-profile",
+    component: ParticipantUpdateProfile,
+  },
+  {
+    path: "/participant/account",
+    name: "participant-update-account",
+    component: ParticipantUpdateAccount,
   },
 ]
 

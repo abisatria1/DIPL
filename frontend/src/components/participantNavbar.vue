@@ -92,8 +92,8 @@
 
         <div class="right">
           <b-dropdown id="dropdown-1" text="Settings" class="m-md-2">
-            <b-dropdown-item>Profile</b-dropdown-item>
-            <b-dropdown-item>Account</b-dropdown-item>
+            <b-dropdown-item @click="editProfile">Profile</b-dropdown-item>
+            <b-dropdown-item @click="editAccount">Account</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item
               ><button type="button" class="btn custom-btn1" @click="logOut()">
@@ -121,6 +121,12 @@ export default {
     logOut() {
       this.$session.destroy()
       this.$router.push("/login")
+    },
+    editProfile() {
+      this.$router.push({ name: "participant-update-profile" })
+    },
+    editAccount() {
+      this.$router.push({ name: "participant-update-account" })
     },
   },
 }
