@@ -19,19 +19,19 @@ const passportJwt = (typeUser) => {
         return next(err)
       }
       if (!user) {
-        const error = new Error("Unauthorized")
+        const error = new Error("Unauthorized, no user found")
         error.status = 401
         return next(error)
       }
       if (typeUser == "campaigner") {
         if (!user.nama_campaigner) {
-          const error = new Error("Unauthorized")
+          const error = new Error("Unauthorized, not campaigner")
           error.status = 401
           return next(error)
         }
       } else if (typeUser == "participant") {
         if (!user.nama_participant) {
-          const error = new Error("Unauthorized")
+          const error = new Error("Unauthorized, not particant")
           error.status = 401
           return next(error)
         }
