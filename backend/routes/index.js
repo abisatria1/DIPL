@@ -48,7 +48,6 @@ const campaignerRouter = require("./campaignerRoute")
 const participantRouter = require("./participantRoute")
 const eventRouter = require("./eventRoute")
 
-router.use("/user/my", passportJwt(), userController.myProfile)
 router.use("/user", userRouter)
 router.use("/event", eventRouter)
 router.use("/campaigner", passportJwt("campaigner"), campaignerRouter)

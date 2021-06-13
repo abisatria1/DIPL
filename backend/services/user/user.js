@@ -126,6 +126,44 @@ class User extends Service {
     )
     return result
   }
+
+  /**
+   * Update data email dari user
+   */
+  async updateEmail(user, email) {
+    const userModel = user.user
+    if (userModel.email === email) {
+      throw this.createError("Email is same", 400)
+    }
+
+    const isEmailExist = await this.db.User.findOne({ where: { email } })
+    if (isEmailExist && isEmailExist.id != userModel.id) {
+      throw this.createError("Email has been used", 400)
+    }
+
+    return await userModel.update({ email })
+  }
+
+  /**
+   * Update data password dari user
+   */
+  async updatePassword(user, oldPassword, newPassword) {
+    const userModel = user.user
+    if (oldPassword === newPassword) {
+      throw this.createError("Password is same", 400)
+    }
+    if (!bcrypt.compareSync(oldPassword, userModel.password)) {
+      throw this.createError("Password didn't match", 401)
+    }
+
+    return await userModel.update({ password: newPassword })
+  }
+
+  createError(message, code) {
+    const error = new Error(message)
+    error.code = code
+    return error
+  }
 }
 
 module.exports = User

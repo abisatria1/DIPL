@@ -28,8 +28,18 @@ const loginSchema = Joi.object().keys({
   password: Joi.string().required(),
 })
 
+const updateEmailSchema = Joi.object().keys({
+  email: Joi.string().email().required(),
+})
+
+const updatePasswordSchema = Joi.object().keys({
+  oldPassword: Joi.string().min(6).required(),
+  newPassword: Joi.string().min(6).required(),
+})
 module.exports = {
   registerParticipantSchema,
   registerCampaignerSchema,
   loginSchema,
+  updateEmailSchema,
+  updatePasswordSchema,
 }

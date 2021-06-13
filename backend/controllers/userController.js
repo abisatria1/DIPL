@@ -15,6 +15,8 @@ class userController {
     this.login = this.login.bind(this)
     this.registerParticipant = this.registerParticipant.bind(this)
     this.registerCampaigner = this.registerCampaigner.bind(this)
+    this.updateEmail = this.updateEmail.bind(this)
+    this.updatePassword = this.updatePassword.bind(this)
   }
 
   /**
@@ -108,6 +110,46 @@ class userController {
     try {
       const { user } = req
       return res.sendSuccess(user)
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  /**
+   * Change email data
+   * @param {Express.Request} req
+   * @param {Express.Response} res
+   * @param {Express.Nextfunction} next
+   * @returns Express.Response
+   */
+  async updateEmail(req, res, next) {
+    try {
+      const { user } = req
+      const { email } = req.body
+      const result = await this.userService.updateEmail(user, email)
+      return res.sendSuccess(result)
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  /**
+   * Change email data
+   * @param {Express.Request} req
+   * @param {Express.Response} res
+   * @param {Express.Nextfunction} next
+   * @returns Express.Response
+   */
+  async updatePassword(req, res, next) {
+    try {
+      const { user } = req
+      const { oldPassword, newPassword } = req.body
+      const result = await this.userService.updatePassword(
+        user,
+        oldPassword,
+        newPassword
+      )
+      return res.sendSuccess(result)
     } catch (err) {
       next(err)
     }

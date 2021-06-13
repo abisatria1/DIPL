@@ -88,6 +88,22 @@ class participantController {
       next(err)
     }
   }
+
+  /**
+   * Untuk melihat seluruh twibbon yang sudah dimiliki oleh user
+   * @param {Express.Request} req
+   * @param {Express.Response} req
+   * @param {Express.NextFunction} next
+   */
+  async viewAllTwibbon(req, res, next) {
+    try {
+      const { user } = req
+      const twibbons = await this.participantService.viewAllTwibbon(user)
+      return res.sendSuccess(twibbons)
+    } catch (err) {
+      next(err)
+    }
+  }
 }
 
 module.exports = participantController
