@@ -197,7 +197,7 @@ export default {
     },
     async getProfile(jwtToken = "") {
       const config = {
-        method: "post",
+        method: "GET",
         url: `${this.baseUrl}${this.url.my}`,
         headers: {
           Authorization: jwtToken,
