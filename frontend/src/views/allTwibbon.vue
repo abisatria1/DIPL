@@ -60,6 +60,17 @@ export default {
     }
   },
 
+  beforeCreate() {
+    if (!this.$session.exists()) {
+      return this.$router.push("/login")
+    }
+
+    const user = this.$session.get("profile")
+    if (!user.nama_participant) {
+      return this.$router.go(-1)
+    }
+  },
+
   async created() {
     try {
       this.isHideSpinner = false
