@@ -4,8 +4,8 @@ const participantController = container.resolve("participantController")
 const router = express.Router()
 
 // validator
-// const validateBody = require("../middleware/bodyValidator")
-// const schema = require("../services/user/user.schema")
+const validateBody = require("../middleware/bodyValidator")
+const schema = require("../services/participant/participant.schema")
 
 const { uploadFotoParticipant, isUploadPhoto } = require("../middleware/upload")
 
@@ -24,4 +24,10 @@ router
   .route("/twibbon/:eventId/:twibbonId")
   .delete(participantController.deleteTwibbon)
 
+router
+  .route("/update/profile")
+  .patch(
+    validateBody(schema.updateProfileSchema),
+    participantController.updateProfile
+  )
 module.exports = router

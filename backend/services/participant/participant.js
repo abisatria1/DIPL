@@ -96,6 +96,36 @@ class Participant extends Service {
     })
     return twibbons
   }
+
+  /**
+   * update data profile participant
+   * @param {Number} eventId
+   * @param {Number} campaignerId
+   * @returns Promise<Event>
+   */
+  async updateProfile(user, username, nama_participant) {
+    const userModel = user.user
+
+    const isExistUsername = await this.db.User.findOne({ where: { username } })
+    if (isExistUsername && isExistUsername.id != userModel.id) {
+      throw this.createError("Username has been used", 400)
+    }
+
+    await userModel.update({ username })
+
+    return await user.update({
+      nama_participant,
+      user: {
+        username,
+      },
+    })
+  }
+
+  createError(message, code) {
+    const error = new Error(message)
+    error.code = code
+    return error
+  }
 }
 
 module.exports = Participant

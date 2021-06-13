@@ -15,6 +15,7 @@ class participantController {
     this.viewTwibbon = this.viewTwibbon.bind(this)
     this.deleteTwibbon = this.deleteTwibbon.bind(this)
     this.viewAllTwibbon = this.viewAllTwibbon.bind(this)
+    this.updateProfile = this.updateProfile.bind(this)
   }
 
   /**
@@ -100,6 +101,29 @@ class participantController {
       const { user } = req
       const twibbons = await this.participantService.viewAllTwibbon(user)
       return res.sendSuccess(twibbons)
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  /**
+   * update data profile dario participant
+   * @param {Express.Request} req
+   * @param {Express.Response} res
+   * @param {Express.Nextfunction} next
+   * @returns Express.Response
+   */
+  async updateProfile(req, res, next) {
+    try {
+      const { user } = req
+      const { username, nama_participant } = req.body
+
+      const result = await this.participantService.updateProfile(
+        user,
+        username,
+        nama_participant
+      )
+      return res.sendSuccess(result)
     } catch (err) {
       next(err)
     }
