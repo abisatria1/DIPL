@@ -39,13 +39,13 @@
   }
 
   .red-btn {
-    @include button($btn-red, 25%);
+    @include button($btn-red, 200px);
   }
   .green-btn {
-    @include button($btn-green, 25%);
+    @include button($btn-green, 200px);
   }
   .yellow-btn {
-    @include button($btn-yellow, 25%);
+    @include button($btn-yellow, 200px);
   }
 
   .button-wrapper {
@@ -131,7 +131,7 @@
             :href="this.twibbon.hasil_foto"
             class="d-none"
             id="download-link"
-            download="mantap.jpg"
+            :download="this.event.nama_event + 'twibbon'"
             target="_blank"
           ></a>
 
