@@ -173,14 +173,12 @@ export default {
       try {
         const { data } = await axios(config)
         const token = data.data.jwtToken
-
         const profile = await this.getProfile(token)
         this.$session.start()
         this.$session.set("jwtToken", token)
         this.$session.set("profile", profile)
         this.isHideSpinner = true
         this.messageHelpers.success("Login Success")
-        axios.defaults.headers.common["Authorization"] = token
 
         if (profile.nama_campaigner) {
           return this.$router.push({ name: "dashboard-campaigner" })
