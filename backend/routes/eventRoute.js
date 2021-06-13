@@ -8,6 +8,6 @@ const router = express.Router()
 // const schema = require("../services/user/user.schema")
 
 router.route("/").get(eventController.viewAllEvent)
+router.route("/search").get(eventController.searchEvent)
 router.route("/:eventId").get(eventController.viewDetailEvent)
-
 module.exports = router

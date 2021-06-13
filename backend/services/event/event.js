@@ -203,6 +203,20 @@ class Event extends Service {
     const result = await event.destroy()
     return result
   }
+
+  /**
+   * Mencari event dengan nama event
+   * @param {String} nama_event
+   * @returns null
+   */
+  async searchEventByName(nama_event) {
+    const events = await this.db.Event.findAll({
+      where: {
+        nama_event: { [Op.like]: `%${nama_event}%` },
+      },
+    })
+    return events
+  }
 }
 
 module.exports = Event
