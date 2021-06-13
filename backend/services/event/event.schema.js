@@ -15,7 +15,14 @@ const updateEventSchema = Joi.object().keys({
   deskripsi_event: Joi.string().allow(""),
 })
 
+const updateProfileSchema = Joi.object().keys({
+  username: Joi.string().min(3).required(),
+  nama_campaigner: Joi.string().min(3).required(),
+  notelp_campaigner: Joi.string().min(6).required(),
+})
+
 module.exports = {
   createEventSchema,
   updateEventSchema,
+  updateProfileSchema,
 }

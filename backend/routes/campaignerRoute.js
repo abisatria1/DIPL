@@ -43,4 +43,10 @@ router
   )
   .delete(campaignerController.deleteEvent)
 
+router
+  .route("/update/profile")
+  .patch(
+    validateBody(schema.updateProfileSchema),
+    campaignerController.updateProfile
+  )
 module.exports = router

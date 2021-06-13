@@ -90,6 +90,37 @@ class Campaigner extends Service {
   async viewEventParticipant(eventId, campaignerId) {
     return await this.eventService.viewEventParticipant(eventId, campaignerId)
   }
+
+  /**
+   * update data profile campaigner
+   * @param {Number} eventId
+   * @param {Number} campaignerId
+   * @returns Promise<Event>
+   */
+  async updateProfile(user, username, nama_campaigner, notelp_campaigner) {
+    const userModel = user.user
+
+    const isExistUsername = await this.db.User.findOne({ where: { username } })
+    if (isExistUsername && isExistUsername.id != userModel.id) {
+      throw this.createError("Username has been used", 400)
+    }
+
+    await userModel.update({ username })
+
+    return await user.update({
+      nama_campaigner,
+      notelp_campaigner,
+      user: {
+        username,
+      },
+    })
+  }
+
+  createError(message, code) {
+    const error = new Error(message)
+    error.code = code
+    return error
+  }
 }
 
 module.exports = Campaigner

@@ -19,6 +19,7 @@ class campaignerController {
     this.findEvent = this.findEvent.bind(this)
     this.updateEventTemplateTwibbon = this.updateEventTemplateTwibbon.bind(this)
     this.viewEventParticipant = this.viewEventParticipant.bind(this)
+    this.updateProfile = this.updateProfile.bind(this)
   }
 
   /**
@@ -192,6 +193,30 @@ class campaignerController {
       const result = await this.campaignerService.viewEventParticipant(
         eventId,
         user.id
+      )
+      return res.sendSuccess(result)
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  /**
+   * update data profile dario campaigner
+   * @param {Express.Request} req
+   * @param {Express.Response} res
+   * @param {Express.Nextfunction} next
+   * @returns Express.Response
+   */
+  async updateProfile(req, res, next) {
+    try {
+      const { user } = req
+      const { username, nama_campaigner, notelp_campaigner } = req.body
+
+      const result = await this.campaignerService.updateProfile(
+        user,
+        username,
+        nama_campaigner,
+        notelp_campaigner
       )
       return res.sendSuccess(result)
     } catch (err) {
