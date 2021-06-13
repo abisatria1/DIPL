@@ -18,6 +18,9 @@ const API_URL = {
   viewAllEvent: "/api/event",
   searchEvent: "/api/event/search",
   viewAllTwibbon: "/api/participant/twibbon",
+  campaignerUpdateProfile: "/api/campaigner/update/profile",
+  updateEmail: "/api/user/update/email",
+  updatePassword: "/api/user/update/password",
 }
 
 for (const property in API_URL) {

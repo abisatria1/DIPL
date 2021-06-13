@@ -65,6 +65,7 @@ const passportJwt = (typeUser) => {
 }
 
 router.route("/my").get(passportJwt(), userController.myProfile)
+
 router
   .route("/update/email")
   .patch(

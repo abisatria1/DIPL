@@ -153,7 +153,7 @@ class User extends Service {
       throw this.createError("Password is same", 400)
     }
     if (!bcrypt.compareSync(oldPassword, userModel.password)) {
-      throw this.createError("Password didn't match", 401)
+      throw this.createError("Password invalid with old password", 401)
     }
 
     return await userModel.update({ password: newPassword })

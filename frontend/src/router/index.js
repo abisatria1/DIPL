@@ -11,6 +11,8 @@ import dashboardCampaigner from "../views/dashboardCampaigner.vue"
 import DetailEvent from "../views/detailEvent.vue"
 import AllTwibbon from "../views/allTwibbon.vue"
 import ViewParticipant from "../views/viewParticipant.vue"
+import CampaignerUpdateProfile from "../views/campaignerUpdateProfile.vue"
+import CampaignerUpdateAccount from "../views/campaignerUpdateAccount.vue"
 
 Vue.use(VueRouter)
 
@@ -120,6 +122,16 @@ const routes = [
         createEvent: "/api/campaigner/event",
       },
     },
+  },
+  {
+    path: "/campaigner/profile",
+    name: "campaigner-update-profile",
+    component: CampaignerUpdateProfile,
+  },
+  {
+    path: "/campaigner/account",
+    name: "campaigner-update-account",
+    component: CampaignerUpdateAccount,
   },
 ]
 
