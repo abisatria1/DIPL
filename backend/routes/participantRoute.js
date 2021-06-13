@@ -9,6 +9,8 @@ const router = express.Router()
 
 const { uploadFotoParticipant, isUploadPhoto } = require("../middleware/upload")
 
+router.route("/twibbon").get(participantController.viewAllTwibbon)
+
 router
   .route("/twibbon/:eventId")
   .post(

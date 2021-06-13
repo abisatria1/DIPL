@@ -14,6 +14,7 @@ class participantController {
     this.createTwibbon = this.createTwibbon.bind(this)
     this.viewTwibbon = this.viewTwibbon.bind(this)
     this.deleteTwibbon = this.deleteTwibbon.bind(this)
+    this.viewAllTwibbon = this.viewAllTwibbon.bind(this)
   }
 
   /**
@@ -67,6 +68,22 @@ class participantController {
       const { twibbonId } = req.params
       await this.participantService.deleteTwibbon(twibbonId, user.id)
       return res.sendSuccess()
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  /**
+   * Untuk melihat seluruh twibbon yang sudah dimiliki oleh user
+   * @param {Express.Request} req
+   * @param {Express.Response} req
+   * @param {Express.NextFunction} next
+   */
+  async viewAllTwibbon(req, res, next) {
+    try {
+      const { user } = req
+      const twibbons = await this.participantService.viewAllTwibbon(user)
+      return res.sendSuccess(twibbons)
     } catch (err) {
       next(err)
     }

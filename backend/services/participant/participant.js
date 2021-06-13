@@ -83,6 +83,19 @@ class Participant extends Service {
     await twibbon.destroy()
     return true
   }
+
+  /**
+   * view all twibbon yang dimiliki / diikuti oleh participant
+   * @param {Number} twibbonId
+   * @param {Number} participantId
+   * @returns True
+   */
+  async viewAllTwibbon(participant) {
+    const twibbons = await participant.getEvents({
+      include: [this.db.Campaigner],
+    })
+    return twibbons
+  }
 }
 
 module.exports = Participant
