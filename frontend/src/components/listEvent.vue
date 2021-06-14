@@ -5,7 +5,7 @@
   .wrapper {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-around;
 
     .card-item {
