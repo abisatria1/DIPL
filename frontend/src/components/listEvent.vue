@@ -124,35 +124,37 @@ export default {
       const wrapper = document.getElementById("wrapper")
       console.log({ wrapper })
       events.forEach((event) => {
-        const cardItem = document.createElement("div")
-        cardItem.className = "card-item"
-        cardItem.addEventListener("click", () => {
-          this.handleItemClick(event.id)
-        })
+        if (event.jumlah_anggota > 0) {
+          const cardItem = document.createElement("div")
+          cardItem.className = "card-item"
+          cardItem.addEventListener("click", () => {
+            this.handleItemClick(event.id)
+          })
 
-        const templateTwibbon = document.createElement("img")
-        templateTwibbon.src = `http://localhost:3000/${event.template_twibbon}`
-        templateTwibbon.alt = event.nama_event
+          const templateTwibbon = document.createElement("img")
+          templateTwibbon.src = `http://localhost:3000/${event.template_twibbon}`
+          templateTwibbon.alt = event.nama_event
 
-        const judul = document.createElement("div")
-        judul.className = "judul"
+          const judul = document.createElement("div")
+          judul.className = "judul"
 
-        const judulText = document.createElement("h5")
-        judulText.textContent = event.nama_event
-        judul.appendChild(judulText)
+          const judulText = document.createElement("h5")
+          judulText.textContent = event.nama_event
+          judul.appendChild(judulText)
 
-        const deskripsi = document.createElement("div")
-        deskripsi.className = "deskripsi"
+          const deskripsi = document.createElement("div")
+          deskripsi.className = "deskripsi"
 
-        const deskripsiText = document.createElement("p")
-        deskripsiText.textContent = event.deskripsi_event
-        deskripsi.appendChild(deskripsiText)
+          const deskripsiText = document.createElement("p")
+          deskripsiText.textContent = event.deskripsi_event
+          deskripsi.appendChild(deskripsiText)
 
-        cardItem.appendChild(templateTwibbon)
-        cardItem.appendChild(judul)
-        cardItem.appendChild(deskripsi)
+          cardItem.appendChild(templateTwibbon)
+          cardItem.appendChild(judul)
+          cardItem.appendChild(deskripsi)
 
-        wrapper.appendChild(cardItem)
+          wrapper.appendChild(cardItem)
+        }
       })
     },
 

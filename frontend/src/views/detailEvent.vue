@@ -261,6 +261,7 @@ export default {
       }
 
       const { data } = await axios(config)
+      
       if (data.data) {
         data.data.hasil_foto = BASE_URL + "/" + data.data.hasil_foto
       }
@@ -278,6 +279,9 @@ export default {
 
       const result = await axios(config)
       const event = result.data.data
+      if (event.jumlah_anggota <= 0) {
+        return this.$router.go(-1)
+      }
       this.event = event
       this.campaigner = event.campaigner
       this.imgUrl = BASE_URL + "/" + event.template_twibbon

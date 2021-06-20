@@ -3,7 +3,7 @@ const Joi = require("joi")
 const createEventSchema = Joi.object().keys({
   nama_event: Joi.string().max(25).required(),
   tanggal_event: Joi.date().required(),
-  jumlah_anggota: Joi.number().required(),
+  jumlah_anggota: Joi.number().required().min(1),
   deskripsi_event: Joi.string().allow(""),
   template_twibbon: Joi.any(),
 })

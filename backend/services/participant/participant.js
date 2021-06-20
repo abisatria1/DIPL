@@ -56,6 +56,9 @@ class Participant extends Service {
       eventId: event.id,
       hasil_foto: hasilOutputPath,
     })
+    await event.update({
+      jumlah_anggota : parseInt(event.jumlah_anggota) - 1
+    })
     return { ...result, hasil_foto_buffer: resFoto }
   }
 
@@ -71,8 +74,14 @@ class Participant extends Service {
         [Op.and]: [{ twibbonId }, { participantId }],
       },
     })
+    const event = await this.db.Event.findByPk(twibbon.eventId)
     if (!twibbon) {
       const error = new Error("twibbon not found")
+      error.status = 404
+      throw error
+    }
+    if (!event) {
+      const error = new Error("event not found")
       error.status = 404
       throw error
     }
@@ -81,6 +90,9 @@ class Participant extends Service {
     }
     deleteFile(twibbon.foto_participant)
     await twibbon.destroy()
+    await event.update({
+      jumlah_anggota : parseInt(event.jumlah_anggota) + 1
+    })
     return true
   }
 
