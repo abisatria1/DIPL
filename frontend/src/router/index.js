@@ -1,24 +1,24 @@
-import Vue from "vue"
-import VueRouter from "vue-router"
-import Home from "../views/Home.vue"
-import Login from "../views/Login.vue"
-import Register from "../views/Register.vue"
-import Event from "../views/Event.vue"
-import editEvent from "../views/editEvent.vue"
-import addEvent from "../views/addEvent.vue"
-import DashboardParticipant from "../views/DashboardParticipant.vue"
-import dashboardCampaigner from "../views/dashboardCampaigner.vue"
-import DetailEvent from "../views/detailEvent.vue"
-import AllTwibbon from "../views/allTwibbon.vue"
-import ViewParticipant from "../views/viewParticipant.vue"
-import CampaignerUpdateProfile from "../views/campaignerUpdateProfile.vue"
-import CampaignerUpdateAccount from "../views/campaignerUpdateAccount.vue"
-import ParticipantUpdateProfile from "../views/participantUpdateProfile.vue"
-import ParticipantUpdateAccount from "../views/participantUpdateAccount.vue"
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";
+import Login from "../views/Login.vue";
+import Register from "../views/Register.vue";
+import Event from "../views/Event.vue";
+import editEvent from "../views/editEvent.vue";
+import addEvent from "../views/addEvent.vue";
+import DashboardParticipant from "../views/DashboardParticipant.vue";
+import dashboardCampaigner from "../views/dashboardCampaigner.vue";
+import DetailEvent from "../views/detailEvent.vue";
+import AllTwibbon from "../views/allTwibbon.vue";
+import ViewParticipant from "../views/viewParticipant.vue";
+import CampaignerUpdateProfile from "../views/campaignerUpdateProfile.vue";
+import CampaignerUpdateAccount from "../views/campaignerUpdateAccount.vue";
+import ParticipantUpdateProfile from "../views/participantUpdateProfile.vue";
+import ParticipantUpdateAccount from "../views/participantUpdateAccount.vue";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-const baseUrl = "http://localhost:3000"
+const baseUrl = process.env.VUE_APP_BACKEND_BASE_URL;
 
 const routes = [
   {
@@ -145,12 +145,12 @@ const routes = [
     name: "participant-update-account",
     component: ParticipantUpdateAccount,
   },
-]
+];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
-})
+});
 
-export default router
+export default router;

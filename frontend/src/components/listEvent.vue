@@ -62,8 +62,8 @@
 </template>
 
 <script>
-import axios from "axios"
-import { API_URL } from "../helpers/listUrl"
+import axios from "axios";
+import { API_URL, BASE_URL } from "../helpers/listUrl";
 export default {
   name: "ListEvent",
   props: {
@@ -73,94 +73,94 @@ export default {
     return {
       isHideSpinner: true,
       events: this.$props.listEvent || [],
-    }
+    };
   },
 
   watch: {
     async listEvent(newValue) {
-      console.log({ events: this.events })
-      this.events = newValue
-      await this.init()
+      console.log({ events: this.events });
+      this.events = newValue;
+      await this.init();
     },
   },
 
   async mounted() {
-    await this.init()
+    await this.init();
   },
 
   methods: {
     async init() {
-      this.isHideSpinner = false
+      this.isHideSpinner = false;
       try {
-        let events = this.events
+        let events = this.events;
         if (!events.length) {
-          events = await this.getAllEvent()
+          events = await this.getAllEvent();
         }
 
-        const wrapper = document.getElementById("wrapper")
-        wrapper.innerHTML = ""
-        this.appendAllEvents(events)
-        this.isHideSpinner = true
+        const wrapper = document.getElementById("wrapper");
+        wrapper.innerHTML = "";
+        this.appendAllEvents(events);
+        this.isHideSpinner = true;
       } catch (error) {
-        this.isHideSpinner = true
+        this.isHideSpinner = true;
         const message = error.response
           ? error.response.data.message
-          : error.message
-        this.messageHelpers.error(message)
-        console.log(error.response)
+          : error.message;
+        this.messageHelpers.error(message);
+        console.log(error.response);
       }
     },
     async getAllEvent() {
       const config = {
         method: "get",
         url: API_URL.viewAllEvent,
-      }
-      const { data } = await axios(config)
-      const events = data.data
-      return events
+      };
+      const { data } = await axios(config);
+      const events = data.data;
+      return events;
     },
 
     async appendAllEvents(events) {
-      const wrapper = document.getElementById("wrapper")
-      console.log({ wrapper })
+      const wrapper = document.getElementById("wrapper");
+      console.log({ wrapper });
       events.forEach((event) => {
         if (event.jumlah_anggota > 0) {
-          const cardItem = document.createElement("div")
-          cardItem.className = "card-item"
+          const cardItem = document.createElement("div");
+          cardItem.className = "card-item";
           cardItem.addEventListener("click", () => {
-            this.handleItemClick(event.id)
-          })
+            this.handleItemClick(event.id);
+          });
 
-          const templateTwibbon = document.createElement("img")
-          templateTwibbon.src = `http://localhost:3000/${event.template_twibbon}`
-          templateTwibbon.alt = event.nama_event
+          const templateTwibbon = document.createElement("img");
+          templateTwibbon.src = `${BASE_URL}/${event.template_twibbon}`;
+          templateTwibbon.alt = event.nama_event;
 
-          const judul = document.createElement("div")
-          judul.className = "judul"
+          const judul = document.createElement("div");
+          judul.className = "judul";
 
-          const judulText = document.createElement("h5")
-          judulText.textContent = event.nama_event
-          judul.appendChild(judulText)
+          const judulText = document.createElement("h5");
+          judulText.textContent = event.nama_event;
+          judul.appendChild(judulText);
 
-          const deskripsi = document.createElement("div")
-          deskripsi.className = "deskripsi"
+          const deskripsi = document.createElement("div");
+          deskripsi.className = "deskripsi";
 
-          const deskripsiText = document.createElement("p")
-          deskripsiText.textContent = event.deskripsi_event
-          deskripsi.appendChild(deskripsiText)
+          const deskripsiText = document.createElement("p");
+          deskripsiText.textContent = event.deskripsi_event;
+          deskripsi.appendChild(deskripsiText);
 
-          cardItem.appendChild(templateTwibbon)
-          cardItem.appendChild(judul)
-          cardItem.appendChild(deskripsi)
+          cardItem.appendChild(templateTwibbon);
+          cardItem.appendChild(judul);
+          cardItem.appendChild(deskripsi);
 
-          wrapper.appendChild(cardItem)
+          wrapper.appendChild(cardItem);
         }
-      })
+      });
     },
 
     handleItemClick(eventId) {
-      this.$router.push({ name: "detail-event", params: { eventId } })
+      this.$router.push({ name: "detail-event", params: { eventId } });
     },
   },
-}
+};
 </script>

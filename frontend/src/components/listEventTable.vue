@@ -144,15 +144,15 @@
 </template>
 
 <script>
-import axios from "axios"
-import { API_URL } from "/src/helpers/listUrl.js"
+import axios from "axios";
+import { API_URL } from "/src/helpers/listUrl.js";
 
 export default {
   name: "list-event-table",
   props: {
     baseUrl: {
       type: String,
-      default: "http://localhost:3000",
+      default: process.env.VUE_APP_BACKEND_BASE_URL,
     },
     fields: {
       type: Array,
@@ -164,7 +164,7 @@ export default {
           "event_desc",
           "twibbon_template",
           { key: "id_event", label: "Actions" },
-        ]
+        ];
       },
     },
     initialItems: Array,
@@ -173,11 +173,11 @@ export default {
     return {
       items: this.initialItems,
       API_URL,
-    }
+    };
   },
   created() {
     this.items = this.$props.initialItems.map((item) => {
-      const tanggal = new Date(item.tanggal_event).toLocaleDateString("fr-CA")
+      const tanggal = new Date(item.tanggal_event).toLocaleDateString("fr-CA");
       return {
         event_name: item.nama_event,
         event_date: tanggal,
@@ -186,23 +186,23 @@ export default {
         twibbon_template: item.template_twibbon,
         id_event: item.id,
         campaignerId: item.campaignerId,
-      }
-    })
+      };
+    });
   },
   methods: {
     toAddEvent() {
-      this.$router.push({ name: "createEvent" })
+      this.$router.push({ name: "createEvent" });
     },
 
     toEditEvent(id_event) {
-      this.$router.push({ name: "editEvent", params: { id: id_event } })
+      this.$router.push({ name: "editEvent", params: { id: id_event } });
     },
 
     toViewParticipant(eventId) {
       this.$router.push({
         name: "view-event-participant",
         params: { eventId },
-      })
+      });
     },
 
     async deleteEvent(id_event) {
@@ -212,16 +212,16 @@ export default {
         headers: {
           Authorization: this.$session.get("jwtToken"),
         },
-      }
+      };
 
       try {
-        await axios(config)
-        this.messageHelpers.success("Data has been deleted")
-        this.$emit("eventDeleted", id_event)
+        await axios(config);
+        this.messageHelpers.success("Data has been deleted");
+        this.$emit("eventDeleted", id_event);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
     },
   },
-}
+};
 </script>

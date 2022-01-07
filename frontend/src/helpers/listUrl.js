@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000"
+const BASE_URL = process.env.VUE_APP_BACKEND_BASE_URL;
 const API_URL = {
   login: "/api/user/login",
   my: "/api/user/my",
@@ -22,11 +22,11 @@ const API_URL = {
   updateEmail: "/api/user/update/email",
   updatePassword: "/api/user/update/password",
   participantUpdateProfile: "/api/participant/update/profile",
-}
+};
 
 for (const property in API_URL) {
-  const url = API_URL[property]
-  API_URL[property] = BASE_URL + url
+  const url = API_URL[property];
+  API_URL[property] = BASE_URL + url;
 }
 
-export { API_URL, BASE_URL }
+export { API_URL, BASE_URL };

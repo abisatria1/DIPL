@@ -61,8 +61,8 @@
 </template>
 
 <script>
-import axios from "axios"
-import { API_URL } from "../helpers/listUrl"
+import axios from "axios";
+import { API_URL, BASE_URL } from "../helpers/listUrl";
 export default {
   name: "list-twibbon",
 
@@ -72,33 +72,33 @@ export default {
     return {
       isHideSpinner: true,
       twibbons: this.$props.listTwibbons || [],
-    }
+    };
   },
 
   mounted() {
-    this.init()
+    this.init();
   },
 
   methods: {
     async init() {
-      this.isHideSpinner = false
+      this.isHideSpinner = false;
       try {
-        let twibbons = this.twibbons
+        let twibbons = this.twibbons;
         if (!twibbons.length) {
-          twibbons = await this.getAllTwibbons()
+          twibbons = await this.getAllTwibbons();
         }
 
-        const wrapper = document.getElementById("wrapper")
-        wrapper.innerHTML = ""
-        this.appendAllTwibbons(twibbons)
-        this.isHideSpinner = true
+        const wrapper = document.getElementById("wrapper");
+        wrapper.innerHTML = "";
+        this.appendAllTwibbons(twibbons);
+        this.isHideSpinner = true;
       } catch (error) {
-        this.isHideSpinner = true
+        this.isHideSpinner = true;
         const message = error.response
           ? error.response.data.message
-          : error.message
-        this.messageHelpers.error(message)
-        console.log(error.response)
+          : error.message;
+        this.messageHelpers.error(message);
+        console.log(error.response);
       }
     },
     async getAllTwibbons() {
@@ -108,51 +108,51 @@ export default {
         headers: {
           Authorization: this.$session.get("jwtToken"),
         },
-      }
-      const { data } = await axios(config)
-      const twibbons = data.data
-      return twibbons
+      };
+      const { data } = await axios(config);
+      const twibbons = data.data;
+      return twibbons;
     },
 
     async appendAllTwibbons(twibbons) {
-      const wrapper = document.getElementById("wrapper")
-      console.log({ wrapper })
+      const wrapper = document.getElementById("wrapper");
+      console.log({ wrapper });
       twibbons.forEach((event) => {
-        const cardItem = document.createElement("div")
-        cardItem.className = "card-item"
+        const cardItem = document.createElement("div");
+        cardItem.className = "card-item";
         cardItem.addEventListener("click", () => {
-          this.handleItemClick(event.id)
-        })
+          this.handleItemClick(event.id);
+        });
 
-        const templateTwibbon = document.createElement("img")
-        templateTwibbon.src = `http://localhost:3000/${event["event-participant"]["hasil_foto"]}`
-        templateTwibbon.alt = event.nama_event
+        const templateTwibbon = document.createElement("img");
+        templateTwibbon.src = `${BASE_URL}/${event["event-participant"]["hasil_foto"]}`;
+        templateTwibbon.alt = event.nama_event;
 
-        const judul = document.createElement("div")
-        judul.className = "judul"
+        const judul = document.createElement("div");
+        judul.className = "judul";
 
-        const judulText = document.createElement("h5")
-        judulText.textContent = event.nama_event
-        judul.appendChild(judulText)
+        const judulText = document.createElement("h5");
+        judulText.textContent = event.nama_event;
+        judul.appendChild(judulText);
 
-        const deskripsi = document.createElement("div")
-        deskripsi.className = "deskripsi"
+        const deskripsi = document.createElement("div");
+        deskripsi.className = "deskripsi";
 
-        const deskripsiText = document.createElement("p")
-        deskripsiText.textContent = event.deskripsi_event
-        deskripsi.appendChild(deskripsiText)
+        const deskripsiText = document.createElement("p");
+        deskripsiText.textContent = event.deskripsi_event;
+        deskripsi.appendChild(deskripsiText);
 
-        cardItem.appendChild(templateTwibbon)
-        cardItem.appendChild(judul)
-        cardItem.appendChild(deskripsi)
+        cardItem.appendChild(templateTwibbon);
+        cardItem.appendChild(judul);
+        cardItem.appendChild(deskripsi);
 
-        wrapper.appendChild(cardItem)
-      })
+        wrapper.appendChild(cardItem);
+      });
     },
 
     handleItemClick(eventId) {
-      this.$router.push({ name: "detail-event", params: { eventId } })
+      this.$router.push({ name: "detail-event", params: { eventId } });
     },
   },
-}
+};
 </script>
