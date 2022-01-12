@@ -1,6 +1,6 @@
-const Service = require("../Service")
-const Op = require("sequelize").Op
-const { deleteFile } = require("../../helper/file")
+const Service = require("../Service");
+const Op = require("sequelize").Op;
+const { deleteFile } = require("../../helper/file");
 
 /**
  * Class ini berisi bisnis logic dari event
@@ -12,7 +12,7 @@ class Event extends Service {
    * @param {Sequelize} db
    */
   constructor({ db }) {
-    super({ db })
+    super({ db });
   }
 
   /**
@@ -20,8 +20,8 @@ class Event extends Service {
    * @returns seluruh data event
    */
   async viewAllEvent() {
-    const event = await await this.db.Event.findAll({})
-    return event
+    const event = await await this.db.Event.findAll({});
+    return event;
   }
 
   /**
@@ -30,7 +30,7 @@ class Event extends Service {
    * @returns seluruh data event yang dimiliki oleh campaigner dengan id = campaingerId
    */
   async viewByCampaigner(campaignerId) {
-    return await this.db.Event.findAll({ where: { campaignerId } })
+    return await this.db.Event.findAll({ where: { campaignerId } });
   }
 
   /**
@@ -42,13 +42,13 @@ class Event extends Service {
   async viewDetailEvent(eventId, campaignerId) {
     const event = await this.db.Event.findOne({
       where: { [Op.and]: [{ id: eventId }, { campaignerId }] },
-    })
+    });
     if (!event) {
-      const err = new Error("Event not Found")
-      err.status = 400
-      throw err
+      const err = new Error("Event not Found");
+      err.status = 400;
+      throw err;
     }
-    return event
+    return event;
   }
 
   /**
@@ -60,13 +60,13 @@ class Event extends Service {
     const event = await this.db.Event.findOne({
       where: { id: eventId },
       include: [this.db.Campaigner],
-    })
+    });
     if (!event) {
-      const err = new Error("Event not Found")
-      err.status = 400
-      throw err
+      const err = new Error("Event not Found");
+      err.status = 400;
+      throw err;
     }
-    return event
+    return event;
   }
 
   /**
@@ -83,7 +83,7 @@ class Event extends Service {
           { campaignerId },
         ],
       },
-    })
+    });
   }
 
   /**
@@ -107,8 +107,14 @@ class Event extends Service {
       campaignerId,
     }
   ) {
-    const result = await this.db.Event.create(eventData)
-    return result
+    const now = Date.now();
+    const inputDate = Date.parse(eventData.tanggal_event);
+
+    if (inputDate < now)
+      throw new Error("The date cannot be less than the current date");
+
+    const result = await this.db.Event.create(eventData);
+    return result;
   }
 
   /**
@@ -132,20 +138,26 @@ class Event extends Service {
     eventId,
     campaignerId
   ) {
+    const now = Date.now();
+    const inputDate = Date.parse(newData.tanggal_event);
+
+    if (inputDate < now)
+      throw new Error("The date cannot be less than the current date");
+
     // mencari apakah event ada atau tidak di database
     const event = await this.db.Event.findOne({
       where: {
         [Op.and]: [{ id: eventId }, { campaignerId }],
       },
-    })
+    });
     if (!event) {
-      const error = new Error("Event not found")
-      error.status = 400
-      throw error
+      const error = new Error("Event not found");
+      error.status = 400;
+      throw error;
     }
     // update event data
-    const result = await event.update(newData)
-    return result
+    const result = await event.update(newData);
+    return result;
   }
 
   /**
@@ -165,18 +177,18 @@ class Event extends Service {
       where: {
         [Op.and]: [{ id: eventId }, { campaignerId }],
       },
-    })
+    });
     if (!event) {
-      deleteFile(template_twibbon)
-      const error = new Error("Event not found")
-      error.status = 400
-      throw error
+      deleteFile(template_twibbon);
+      const error = new Error("Event not found");
+      error.status = 400;
+      throw error;
     }
     // menghapus template twibbon yang lama
-    deleteFile(event.template_twibbon)
+    deleteFile(event.template_twibbon);
     // update data event
-    const result = await event.update({ template_twibbon })
-    return result
+    const result = await event.update({ template_twibbon });
+    return result;
   }
 
   /**
@@ -191,17 +203,17 @@ class Event extends Service {
       where: {
         [Op.and]: [{ id: eventId }, { campaignerId }],
       },
-    })
+    });
     if (!event) {
-      const error = new Error("Event not found")
-      error.status = 400
-      throw error
+      const error = new Error("Event not found");
+      error.status = 400;
+      throw error;
     }
     // menghapus template twibbon
-    deleteFile(event.template_twibbon)
+    deleteFile(event.template_twibbon);
     // delete event
-    const result = await event.destroy()
-    return result
+    const result = await event.destroy();
+    return result;
   }
 
   /**
@@ -214,8 +226,8 @@ class Event extends Service {
       where: {
         nama_event: { [Op.like]: `%${nama_event}%` },
       },
-    })
-    return events
+    });
+    return events;
   }
 
   /**
@@ -231,18 +243,18 @@ class Event extends Service {
       where: {
         [Op.and]: [{ id: eventId }, { campaignerId }],
       },
-    })
+    });
     if (!event) {
-      const error = new Error("Event not found")
-      error.status = 400
-      throw error
+      const error = new Error("Event not found");
+      error.status = 400;
+      throw error;
     }
 
     const events = await event.getParticipants({
       include: [this.db.User],
-    })
-    return events
+    });
+    return events;
   }
 }
 
-module.exports = Event
+module.exports = Event;

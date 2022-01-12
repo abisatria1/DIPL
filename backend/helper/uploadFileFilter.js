@@ -1,54 +1,52 @@
 /**
  * Filter File using JOI Schema
- * @param {Joi.object} schema 
+ * @param {Joi.object} schema
  * @returns callback bool (True/False)
  */
-const fileFilterBySchema = (schema) => {
+const fileFilterBySchema = (
+  schema,
+  mimetype = ["image/jpeg", "image/jpg", "image/gif", "image/png"]
+) => {
   return (req, file, cb) => {
-    if (
-      file.mimetype === "image/jpeg" ||
-      file.mimetype === "image/jpg" ||
-      file.mimetype === "image/gif" ||
-      file.mimetype === "image/png"
-    ) {
+    if (mimetype.includes(file.mimetype)) {
       if (schema) {
-        return validateBody(req, schema, cb)
+        return validateBody(req, schema, cb);
       } else {
-        return cb(null, true)
+        return cb(null, true);
       }
     } else {
-      const err = new Error("File extension doesnt match")
-      err.status = 422
-      cb(err, false)
+      const err = new Error("File extension doesnt match");
+      err.status = 422;
+      cb(err, false);
     }
-  }
-}
+  };
+};
 /**
  * Validate payload with Joi Schema
- * @param {Express.request} req 
- * @param {Joi.object} schema 
- * @param {Express.NextFunction} cb 
+ * @param {Express.request} req
+ * @param {Joi.object} schema
+ * @param {Express.NextFunction} cb
  * @returns callback
  */
 const validateBody = (req, schema, cb) => {
-  const result = schema.validate(req.body, { abortEarly: false })
+  const result = schema.validate(req.body, { abortEarly: false });
   if (result.error) {
-    let errorData = []
+    let errorData = [];
     result.error.details.map((item) => {
       let error = {
         path: item.path[0],
         message: item.message,
-      }
-      errorData.push(error)
-    })
-    let err = new Error("Validation failed")
-    err.status = 422
-    err.data = errorData
-    return cb(err, false)
+      };
+      errorData.push(error);
+    });
+    let err = new Error("Validation failed");
+    err.status = 422;
+    err.data = errorData;
+    return cb(err, false);
   }
-  return cb(null, true)
-}
+  return cb(null, true);
+};
 
 module.exports = {
   fileFilterBySchema,
-}
+};
